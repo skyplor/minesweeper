@@ -31,13 +31,20 @@ public class MinesweeperGame extends Activity implements Communicator {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mainFragment = new MainFragment_();
         fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.main_layout, mainFragment, "MainFragment");
-        transaction.commit();
+        if (savedInstanceState == null) {
+            // If we don't have any savedinstancestate, it means this is newly created.
+            // So we will create the main fragment and put into this activity.
+            mainFragment = new MainFragment_();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.main_layout, mainFragment, "MainFragment");
+            transaction.commit();
+        } else {
+            mainFragment = (MainFragment_) getFragmentManager().findFragmentByTag("MainFragment");
+        }
     }
 
+    // This is the part where the game's title slide in and the main fragments' buttons fade in after that
     @AfterViews
     void init() {
         Typeface font = Typeface.createFromAsset(getAssets(), "3D.ttf");
@@ -46,11 +53,12 @@ public class MinesweeperGame extends Activity implements Communicator {
         Animation animation2 = AnimationUtils.loadAnimation(MinesweeperGame.this, android.R.anim.fade_in);
         animation1.setDuration(2000);
         final Animation animate = animation2;
+        // We override the animation listener to allow the buttons to fade in only after the title finishes its animation
         animation1.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
             public void onAnimationStart(Animation animation) {
-                mainFragment.setVisibility(View.GONE);
+                mainFragment.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -67,6 +75,8 @@ public class MinesweeperGame extends Activity implements Communicator {
         title.startAnimation(animation1);
     }
 
+    // Here, we do another animation and swap out the main fragment for the difficulty level fragment
+    // when the New Game button is tapped.
     @Override
     public void swapNewGameFragment() {
         difficultyLevelFragment = new DifficultyLevelFragment_();
@@ -76,10 +86,13 @@ public class MinesweeperGame extends Activity implements Communicator {
                 R.animator.card_flip_left_in, R.animator.card_flip_left_out);
 
         fragmentTransaction.replace(R.id.main_layout, difficultyLevelFragment, "DifficultyFragment");
+        // This portion is crucial in that we push this transaction into the backstack so users can
+        // go back to seeing the main fragment when they press the back button
         fragmentTransaction.addToBackStack("MainFragment");
         fragmentTransaction.commit();
     }
 
+    // Here, we pass some values over to the next activity when the player select the difficulty level
     @Override
     public void goToNewGame(int rows, int columns, int numOfBombs) {
         Intent intent = new Intent(MinesweeperGame.this, MainActivity_.class);
@@ -88,4 +101,17 @@ public class MinesweeperGame extends Activity implements Communicator {
         intent.putExtra("numOfBombs", numOfBombs);
         startActivity(intent);
     }
+
+    @Override
+    public void goToHelp() {
+        Intent helpIntent = new Intent(MinesweeperGame.this, HelpActivity_.class);
+        startActivity(helpIntent);
+    }
+
+    @Override
+    public void goToOptions() {
+        Intent optionsIntent = new Intent(MinesweeperGame.this, OptionsActivity_.class);
+        startActivity(optionsIntent);
+    }
+
 }

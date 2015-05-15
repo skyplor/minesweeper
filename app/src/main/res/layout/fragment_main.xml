@@ -13,14 +13,6 @@
         android:background="@drawable/shadowbtn"
         android:text="@string/new_game"
         android:textColor="@color/Indigo" />
-    <Button
-        android:id="@+id/scoreBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@drawable/shadowbtn"
-        android:text="@string/pastscore"
-        android:textColor="@color/Indigo" />
 
     <Button
         android:id="@+id/optionsBtn"

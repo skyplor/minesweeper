@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.skypayjm.app.minesweeper" >
+    package="com.skypayjm.app.minesweeper">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".view.MinesweeperGame_"
-            android:label="@string/title_activity_minesweeper_game" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_minesweeper_game">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +19,30 @@
         </activity>
         <activity
             android:name=".view.MainActivity_"
-            android:label="@string/title_activity_main" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_main"
+            android:parentActivityName=".view.MinesweeperGame_">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.skypayjm.app.minesweeper.view.MinesweeperGame_" />
+        </activity>
+        <activity
+            android:name=".view.HelpActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_help"
+            android:parentActivityName=".view.MinesweeperGame_">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.skypayjm.app.minesweeper.view.MinesweeperGame_" />
+        </activity>
+        <activity
+            android:name=".view.OptionsActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_options"
+            android:parentActivityName=".view.MinesweeperGame_">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.skypayjm.app.minesweeper.view.MinesweeperGame_" />
         </activity>
     </application>
 

@@ -9,6 +9,7 @@ import com.skypayjm.app.minesweeper.model.Tile;
 import java.util.Random;
 
 /**
+ * Utility methods which can possibly be used by others next time
  * Created by Sky on 5/13/2015.
  */
 public class Util {
@@ -89,6 +90,7 @@ public class Util {
         }
     }
 
+    // This methods checks if the tile's coordinates passed in are valid
     private boolean checkValidTile(int row, int col) {
         return (row >= 0 && row < rows && col >= 0 && col < columns);
     }
@@ -101,7 +103,7 @@ public class Util {
         while (numOfBombs > 0) {
             int row = rand.nextInt(rows);
             int col = rand.nextInt(columns);
-            if (row != currentRow && col != currentColumn)
+            if (row != currentRow || col != currentColumn)
                 if (!tiles[row][col].isBomb()) {
                     tiles[row][col].setIsBomb(true);
                     numOfBombs--;

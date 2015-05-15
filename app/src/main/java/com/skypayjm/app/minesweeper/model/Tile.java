@@ -2,14 +2,10 @@ package com.skypayjm.app.minesweeper.model;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.Button;
-import android.graphics.Typeface;
 
 import com.skypayjm.app.minesweeper.R;
 
@@ -84,6 +80,8 @@ public class Tile extends Button {
         return adjTiles;
     }
 
+    // This method will first check if this tile has a bomb. If it has, it is revealed immediately and returned as true.
+    // If false, we check the tile and if its bomb count is 0, we will do a graph traversal to reveal all its adjacent tiles.
     public boolean reveal() {
         if (isBomb) {
             this.setBackgroundResource(R.drawable.bomb);

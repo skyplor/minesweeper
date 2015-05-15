@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/august_small"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/optionsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/title_activity_options"
+        android:textColor="@color/Indigo"
+        android:textSize="@dimen/abc_text_size_display_2_material"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/rowsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/custom_rows"
+        android:textColor="@color/DarkBlue"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/rowsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:hint="@string/custom_rows_hint"
+        android:inputType="number"
+        android:text="@string/basic_rows"
+        android:textColor="@color/Indigo"
+        android:textColorHint="@color/Black" />
+
+    <TextView
+        android:id="@+id/columnsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/custom_columns"
+        android:textColor="@color/DarkBlue"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/columnsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:hint="@string/custom_columns_hint"
+        android:inputType="number"
+        android:text="@string/basic_columns"
+        android:textColor="@color/Indigo"
+        android:textColorHint="@color/Black" />
+
+    <TextView
+        android:id="@+id/numBombsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/custom_mines"
+        android:textColor="@color/DarkBlue"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/numBombsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:hint="@string/custom_mines_hint"
+        android:inputType="number"
+        android:text="@string/basic_mines"
+        android:textColor="@color/Indigo"
+        android:textColorHint="@color/Black" />
+
+    <Button
+        android:id="@+id/customGameBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/shadowbtn"
+        android:text="@string/custom_game"
+        android:textColor="@color/Indigo" />
+</LinearLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sky\'s Minesweeper</string>
+    <string name="app_name">Sky\'s\nMinesweeper</string>
     <string name="title_activity_minesweeper_game">Minesweeper</string>
     <string name="action_settings">Settings</string>
     <string name="new_game">New Game</string>
@@ -10,6 +10,66 @@
     <string name="beginner">Beginner</string>
     <string name="intermediate">Intermediate</string>
     <string name="expert">Expert</string>
-    <string name="custom">Custom...</string>
     <string name="pastscore">Past Scores</string>
+    <string name="title_activity_help">HelpActivity</string>
+
+    <string name="help_text"><![CDATA[
+    <font color=\'white\'><h1 style=\"text-align: center;\">Minesweeper: How to play</h1>
+
+<p style=\"text-align: justify;\">Minesweeper is a deceptively simple test of memory and reasoning&mdash;and one of the most popular Windows games of all time. The goal: find the empty squares and avoid the mines.</p>
+
+<h2>To start a game</h2>
+
+<ol>
+	<li>At the main screen, tap on <b>New Game</b>.</li>
+	<li>Choose a difficulty level - <b>Beginner</b>, <b>Intermediate</b>, or <b>Expert</b></li>
+	<li>The screen will change to display the appropriate tiles.</li>
+	<li>To start, tap on a tile.</li>
+	<li>You may also choose to create a custom game by tapping on the <b>Options</b> button.</li>
+</ol>
+
+<h2>Rules &amp; Basics</h2>
+
+<h3><b>The objective</b></h3>
+
+<p>Find the empty squares while avoiding the mines.</p>
+
+<h3><b>The board</b></h3>
+
+<p style=\"text-align: justify;\">Minesweeper has three standard boards to choose from, each progressively more difficult.</p>
+
+<ul>
+	<li><b>Beginner: </b>64 tiles, 10 mines</li>
+	<li><b>Intermediate: </b>256 tiles, 40 mines</li>
+	<li><b>Expert: </b>480 tiles, 99 mines</li>
+</ul>
+
+<h3><strong>How to play</strong></h3>
+
+<p>The rules in Minesweeper are simple:</p>
+
+<ul>
+	<li>Uncover a mine, and the game ends.</li>
+	<li>Uncover an empty square, and you keep playing.</li>
+	<li style=\"text-align: justify;\">Uncover a number, and it tells you how many mines lay hidden in the eight surrounding squares - information you use to deduce which nearby squares are safe to click.</li>
+</ul>
+
+<h3><strong>Hints and Tips</strong></h3>
+
+<p style=\"text-align: justify;\"><b>Study the patterns. </b>If three squares in a row display 2-3-2, then you know three mines are probably lined up beside that row. If a square says 8, every surrounding square has a mine.</p>
+
+<p style=\"text-align: justify;\"><b>Explore the unexplored.</b> Not sure where to click next? Try clearing some unexplored territory. You\'re better off clicking in the middle of unmarked squares than in an area you suspect has a mine.</p></font>
+
+]]></string>
+    <string name="title_activity_options">Options</string>
+    <string name="custom_rows">Number of rows:</string>
+    <string name="custom_columns">Number of columns:</string>
+    <string name="custom_mines">Number of Mines:</string>
+    <string name="custom_game">Play Custom Game</string>
+    <string name="basic_rows">8</string>
+    <string name="basic_columns">8</string>
+    <string name="basic_mines">10</string>
+    <string name="custom_rows_hint">Enter a value between 1–30</string>
+    <string name="custom_columns_hint">Enter a value between 1–30</string>
+    <string name="custom_mines_hint">Enter a value between 1–500</string>
 </resources>

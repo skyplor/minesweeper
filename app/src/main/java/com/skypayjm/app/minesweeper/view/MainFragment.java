@@ -3,14 +3,12 @@ package com.skypayjm.app.minesweeper.view;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Color;
 import android.view.animation.Animation;
 import android.widget.Button;
 
 import com.skypayjm.app.minesweeper.R;
 import com.skypayjm.app.minesweeper.util.Communicator;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -24,7 +22,7 @@ public class MainFragment extends Fragment {
 
 
     @ViewById
-    Button newBtn, scoreBtn, optionsBtn, helpBtn;
+    Button newBtn, optionsBtn, helpBtn;
     Communicator communicator;
 
     public MainFragment() {
@@ -36,22 +34,14 @@ public class MainFragment extends Fragment {
         communicator = (Communicator) activity;
     }
 
-    @AfterViews
-    void init() {
-        scoreBtn.setEnabled(false);
-        scoreBtn.setTextColor(Color.DKGRAY);
-    }
-
     public void setVisibility(int visibility) {
         newBtn.setVisibility(visibility);
-        scoreBtn.setVisibility(visibility);
         optionsBtn.setVisibility(visibility);
         helpBtn.setVisibility(visibility);
     }
 
     public void startAnimation(Animation animation) {
         newBtn.startAnimation(animation);
-        scoreBtn.startAnimation(animation);
         optionsBtn.startAnimation(animation);
         helpBtn.startAnimation(animation);
     }
@@ -59,5 +49,15 @@ public class MainFragment extends Fragment {
     @Click
     void newBtn() {
         communicator.swapNewGameFragment();
+    }
+
+    @Click
+    void helpBtn() {
+        communicator.goToHelp();
+    }
+
+    @Click
+    void optionsBtn() {
+        communicator.goToOptions();
     }
 }

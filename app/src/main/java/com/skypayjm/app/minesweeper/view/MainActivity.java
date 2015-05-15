@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,6 +23,10 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+/**
+ * This activity is the actual screen where players will play on.
+ * It consists of the New Game, Validate and Cheat buttons as well as the actual grid/board
+ */
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
 
@@ -116,7 +118,7 @@ public class MainActivity extends Activity {
         validate.setEnabled(false);
         isGameStarted = false;
         cheatModeSet = false;
-        cheatGame.setTextColor(Color.WHITE);
+        cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
         cheatGame.setTypeface(null, Typeface.NORMAL);
         areMinesSet = false;
 
@@ -146,7 +148,7 @@ public class MainActivity extends Activity {
             cheatGame.setTypeface(null, Typeface.BOLD);
         } else {
             Toast.makeText(this, "Cheat Mode Off", Toast.LENGTH_SHORT).show();
-            cheatGame.setTextColor(Color.WHITE);
+            cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
             cheatGame.setTypeface(null, Typeface.NORMAL);
         }
 
@@ -154,31 +156,15 @@ public class MainActivity extends Activity {
 
     @AfterViews
     void init() {
+        overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_shrink_fade_out_from_bottom);
         if (!isGameStarted) validate.setEnabled(false);
 
         resetGame();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_shrink_fade_out_from_bottom);
     }
 
     public void startNewGame(int row, int col, int numOfBombs) {
@@ -220,8 +206,10 @@ public class MainActivity extends Activity {
                         }
 
                         if (cheatModeSet) {
-                            // We will reveal the particular tile for 1s before turning it back
-                            tiles[currentRow][currentColumn].tempReveal();
+                            // We will do this temp reveal only when the number wasn't revealed previously
+                            if (!tiles[currentRow][currentColumn].isRevealed())
+                                // We will reveal the particular tile for 1s before turning it back
+                                tiles[currentRow][currentColumn].tempReveal();
                         } else {
                             // check if this tile is a bomb. If it is, reveal() will return true and we finishes this game
                             if (tiles[currentRow][currentColumn].reveal())
@@ -255,6 +243,7 @@ public class MainActivity extends Activity {
         create_showDialog("Congrats on beating the game!", "New Game", "Cancel", WIN);
     }
 
+    // This method will generate out the actual minegrid and display it out for the player to start playing
     public void showMineGrid() {
         for (int row = 0; row < rows; row++) {
             TableRow tableRow = new TableRow(this);

@@ -32,13 +32,4 @@
         android:text="@string/expert"
         android:textColor="@color/Indigo" />
 
-    <Button
-        android:id="@+id/customBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@drawable/shadowbtn"
-        android:text="@string/custom"
-        android:textColor="@color/Indigo" />
-
 </LinearLayout>
