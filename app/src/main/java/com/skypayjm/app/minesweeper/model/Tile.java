@@ -41,6 +41,7 @@ public class Tile extends Button {
         isRevealed = false;
         isClickable = true;
         adjTiles = new ArrayList<Tile>();
+        this.setBackgroundResource(R.drawable.apptheme_btn_default_holo_light);
     }
 
     public void populateAdjTiles(Tile adjTile) {
