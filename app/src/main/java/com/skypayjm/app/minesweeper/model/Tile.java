@@ -1,8 +1,6 @@
 package com.skypayjm.app.minesweeper.model;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.Button;
@@ -41,7 +39,7 @@ public class Tile extends Button {
         isRevealed = false;
         isClickable = true;
         adjTiles = new ArrayList<Tile>();
-        this.setBackgroundResource(R.drawable.apptheme_btn_default_holo_light);
+        this.setBackgroundResource(R.drawable.sprite_up);
     }
 
     public void populateAdjTiles(Tile adjTile) {
@@ -85,7 +83,7 @@ public class Tile extends Button {
     // If false, we check the tile and if its bomb count is 0, we will do a graph traversal to reveal all its adjacent tiles.
     public boolean reveal() {
         if (isBomb) {
-            this.setBackgroundResource(R.drawable.bomb);
+            this.setBackgroundResource(getBackgroundResource(isBomb,this.bombCount));
             isRevealed = true;
         } else {
             Queue<Tile> queue = new LinkedList<Tile>();
@@ -95,8 +93,7 @@ public class Tile extends Button {
                 if (!curTile.isRevealed()) {
                     // set this tile as revealed and we continue to reveal
                     curTile.setIsRevealed(true);
-                    curTile.setText(Integer.toString(curTile.bombCount));
-                    curTile.setTypeface(null, Typeface.BOLD);
+                    curTile.setBackgroundResource(getBackgroundResource(isBomb,curTile.bombCount));
                     if (curTile.getBombCount() == 0) {
                         // enqueue all the adj tiles
                         List<Tile> adjTiles = curTile.getAdjTiles();
@@ -113,32 +110,37 @@ public class Tile extends Button {
 
     public void tempReveal() {
         final Button curBtn = this;
-        final int paddingBottom = this.getPaddingBottom(), paddingLeft = this.getPaddingLeft();
-        final int paddingRight = this.getPaddingRight(), paddingTop = this.getPaddingTop();
-        if (isBomb) {
-            this.setText("B");
-            this.setTypeface(null, Typeface.BOLD);
-            this.setTextColor(Color.RED);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    // Actions to do after 1 seconds
-                    curBtn.setText("");
-                    curBtn.setTextColor(Color.WHITE);
-                }
-            }, 1000);
-        } else {
-            this.setText(Integer.toString(bombCount));
-            this.setTypeface(null, Typeface.BOLD);
-            this.setTextColor(Color.RED);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    // Actions to do after 1 seconds
-                    curBtn.setText("");
-                    curBtn.setTextColor(Color.WHITE);
-                }
-            }, 1000);
+        this.setBackgroundResource(getBackgroundResource(isBomb, getBombCount()));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // Actions to do after 1 seconds
+                curBtn.setBackgroundResource(R.drawable.sprite_up);
+            }
+        }, 1000);
+    }
+
+    private int getBackgroundResource(boolean bomb, int bombCount) {
+        if (bomb) return R.drawable.sprite_bomb;
+        else switch (bombCount) {
+            case 1:
+                return R.drawable.sprite_1;
+            case 2:
+                return R.drawable.sprite_2;
+            case 3:
+                return R.drawable.sprite_3;
+            case 4:
+                return R.drawable.sprite_4;
+            case 5:
+                return R.drawable.sprite_5;
+            case 6:
+                return R.drawable.sprite_6;
+            case 7:
+                return R.drawable.sprite_7;
+            case 8:
+                return R.drawable.sprite_8;
+            default:
+                return R.drawable.sprite_blank;
         }
     }
 }

@@ -248,7 +248,6 @@ public class MainActivity extends Activity {
         for (int row = 0; row < rows; row++) {
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableRow.LayoutParams((tileDimension + 2 * tilePadding) * columns, tileDimension + 2 * tilePadding));
-
             for (int column = 0; column < columns; column++) {
                 tiles[row][column].setLayoutParams(new TableRow.LayoutParams(tileDimension + 2 * tilePadding, tileDimension + 2 * tilePadding));
                 tiles[row][column].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);

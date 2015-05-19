@@ -11,7 +11,7 @@
     android:weightSum="8"
     tools:context="com.skypayjm.app.minesweeper.view.MainActivity_">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="7">
@@ -29,7 +29,8 @@
                 android:layout_marginRight="20dp"
                 android:clickable="true"
                 android:elevation="10dp"
-                android:src="@drawable/smiley_button_selector" />
+                android:src="@drawable/smiley_button_selector"
+                android:background="@null"/>
 
             <Button
                 android:id="@+id/newGame"
@@ -57,15 +58,21 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <com.skypayjm.app.minesweeper.model.TwoDScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:scrollbars="none">
+        android:layout_weight="1">
 
-        <TableLayout
-            android:id="@+id/MinesweepGridTable"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableLayout>
-    </com.skypayjm.app.minesweeper.model.TwoDScrollView>
+        <com.skypayjm.app.minesweeper.model.TwoDScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:scrollbars="none">
+
+            <TableLayout
+                android:id="@+id/MinesweepGridTable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </com.skypayjm.app.minesweeper.model.TwoDScrollView>
+    </RelativeLayout>
 </LinearLayout>

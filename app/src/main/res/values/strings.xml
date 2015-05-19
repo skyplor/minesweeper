@@ -51,15 +51,19 @@
 <ul>
 	<li>Uncover a mine, and the game ends.</li>
 	<li>Uncover an empty square, and you keep playing.</li>
-	<li style=\"text-align: justify;\">Uncover a number, and it tells you how many mines lay hidden in the eight surrounding squares - information you use to deduce which nearby squares are safe to click.</li>
+	<li>Uncover a number, and it tells you how many mines lay hidden in the eight surrounding squares - information you use to deduce which nearby squares are safe to click.</li>
 </ul>
+
+<h3><strong>How to win</strong></h3>
+
+<p style=\"text-align: justify;\">Simply click on the smiley icon when you feel you have uncovered all the empty squares.</p>
 
 <h3><strong>Hints and Tips</strong></h3>
 
 <p style=\"text-align: justify;\"><b>Study the patterns. </b>If three squares in a row display 2-3-2, then you know three mines are probably lined up beside that row. If a square says 8, every surrounding square has a mine.</p>
 
-<p style=\"text-align: justify;\"><b>Explore the unexplored.</b> Not sure where to click next? Try clearing some unexplored territory. You\'re better off clicking in the middle of unmarked squares than in an area you suspect has a mine.</p></font>
-
+<p style=\"text-align: justify;\"><b>Explore the unexplored.</b> Not sure where to click next? Try clearing some unexplored territory. You\'re better off clicking in the middle of unmarked squares than in an area you suspect has a mine.</p>
+</font>
 ]]></string>
     <string name="title_activity_options">Options</string>
     <string name="custom_rows">Number of rows:</string>
