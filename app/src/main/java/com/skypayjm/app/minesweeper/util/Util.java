@@ -2,10 +2,15 @@ package com.skypayjm.app.minesweeper.util;
 
 import android.app.Activity;
 import android.graphics.Point;
+import android.os.Handler;
 import android.view.Display;
 
+import com.skypayjm.app.minesweeper.R;
 import com.skypayjm.app.minesweeper.model.Tile;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -56,36 +61,37 @@ public class Util {
     private void populatetiles(int pos, int row, int col, Tile[][] tiles) {
         switch (pos) {
             case 0:
-                if (checkValidTile(row - 1, col - 1))
-                    tiles[row][col].populateAdjTiles(tiles[row - 1][col - 1]);
+                if (checkValidTile(row - 1, col - 1)) {
+                    populateAdjTiles(tiles[row][col], tiles[row - 1][col - 1]);
+                }
                 break;
             case 1:
                 if (checkValidTile(row - 1, col))
-                    tiles[row][col].populateAdjTiles(tiles[row - 1][col]);
+                    populateAdjTiles(tiles[row][col], tiles[row - 1][col]);
                 break;
             case 2:
                 if (checkValidTile(row - 1, col + 1))
-                    tiles[row][col].populateAdjTiles(tiles[row - 1][col + 1]);
+                    populateAdjTiles(tiles[row][col], tiles[row - 1][col + 1]);
                 break;
             case 3:
                 if (checkValidTile(row, col - 1))
-                    tiles[row][col].populateAdjTiles(tiles[row][col - 1]);
+                    populateAdjTiles(tiles[row][col], tiles[row][col - 1]);
                 break;
             case 4:
                 if (checkValidTile(row, col + 1))
-                    tiles[row][col].populateAdjTiles(tiles[row][col + 1]);
+                    populateAdjTiles(tiles[row][col], tiles[row][col + 1]);
                 break;
             case 5:
                 if (checkValidTile(row + 1, col - 1))
-                    tiles[row][col].populateAdjTiles(tiles[row + 1][col - 1]);
+                    populateAdjTiles(tiles[row][col], tiles[row + 1][col - 1]);
                 break;
             case 6:
                 if (checkValidTile(row + 1, col))
-                    tiles[row][col].populateAdjTiles(tiles[row + 1][col]);
+                    populateAdjTiles(tiles[row][col], tiles[row + 1][col]);
                 break;
             case 7:
                 if (checkValidTile(row + 1, col + 1))
-                    tiles[row][col].populateAdjTiles(tiles[row + 1][col + 1]);
+                    populateAdjTiles(tiles[row][col], tiles[row + 1][col + 1]);
                 break;
         }
     }
@@ -110,5 +116,76 @@ public class Util {
                 }
         }
         return tiles;
+    }
+
+    public void populateAdjTiles(Tile parent, Tile adjTile) {
+        List<Tile> tempAdjList = parent.getAdjTiles();
+        tempAdjList.add(adjTile);
+        if (adjTile.isBomb()) parent.incrementBombCount();
+    }
+
+    // This method will first check if this tile has a bomb. If it has, it is revealed immediately and returned as true.
+    // If false, we check the tile and if its bomb count is 0, we will do a graph traversal to reveal all its adjacent tiles.
+    public boolean reveal(Tile btn) {
+        if (btn.isBomb()) {
+            btn.setBackgroundResource(getBackgroundResource(btn.isBomb(), btn.getBombCount()));
+            btn.setIsRevealed(true);
+        } else {
+            Queue<Tile> queue = new LinkedList<Tile>();
+            queue.add(btn);
+            while (!queue.isEmpty()) {
+                Tile curTile = queue.remove();
+                if (!curTile.isRevealed()) {
+                    // set this tile as revealed and we continue to reveal
+                    curTile.setIsRevealed(true);
+                    curTile.setBackgroundResource(getBackgroundResource(btn.isBomb(), curTile.getBombCount()));
+                    if (curTile.getBombCount() == 0) {
+                        // enqueue all the adj tiles
+                        List<Tile> adjTiles = curTile.getAdjTiles();
+                        for (int i = 0; i < adjTiles.size(); i++)
+                            if (adjTiles.get(i) != null)
+                                queue.add(adjTiles.get(i));
+                    }
+                }
+            }
+        }
+
+        return btn.isBomb();
+    }
+
+    public void tempReveal(Tile btn) {
+        final Tile curBtn = btn;
+        curBtn.setBackgroundResource(getBackgroundResource(curBtn.isBomb(), curBtn.getBombCount()));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // Actions to do after 1 seconds
+                curBtn.setBackgroundResource(R.drawable.sprite_up);
+            }
+        }, 1000);
+    }
+
+    private int getBackgroundResource(boolean bomb, int bombCount) {
+        if (bomb) return R.drawable.sprite_bomb;
+        else switch (bombCount) {
+            case 1:
+                return R.drawable.sprite_1;
+            case 2:
+                return R.drawable.sprite_2;
+            case 3:
+                return R.drawable.sprite_3;
+            case 4:
+                return R.drawable.sprite_4;
+            case 5:
+                return R.drawable.sprite_5;
+            case 6:
+                return R.drawable.sprite_6;
+            case 7:
+                return R.drawable.sprite_7;
+            case 8:
+                return R.drawable.sprite_8;
+            default:
+                return R.drawable.sprite_blank;
+        }
     }
 }

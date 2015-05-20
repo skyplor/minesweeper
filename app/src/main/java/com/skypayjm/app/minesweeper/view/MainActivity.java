@@ -207,12 +207,13 @@ public class MainActivity extends Activity {
 
                         if (cheatModeSet) {
                             // We will do this temp reveal only when the number wasn't revealed previously
-                            if (!tiles[currentRow][currentColumn].isRevealed())
+                            if (!tiles[currentRow][currentColumn].isRevealed()) {
                                 // We will reveal the particular tile for 1s before turning it back
-                                tiles[currentRow][currentColumn].tempReveal();
+                                util.tempReveal(tiles[currentRow][currentColumn]);
+                            }
                         } else {
                             // check if this tile is a bomb. If it is, reveal() will return true and we finishes this game
-                            if (tiles[currentRow][currentColumn].reveal())
+                            if (util.reveal(tiles[currentRow][currentColumn]))
                                 // Oops, game over
                                 finishGame();
                         }
