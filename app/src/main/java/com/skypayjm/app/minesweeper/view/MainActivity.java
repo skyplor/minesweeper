@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     ImageButton validate;
 
     @ViewById
-    TextView timer, numBombsTextView;
+    TextView timerTextView, numBombsTextView;
 
     @ViewById
     TableLayout MinesweepGridTable;
@@ -162,8 +162,8 @@ public class MainActivity extends Activity {
         overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_shrink_fade_out_from_bottom);
         Typeface font = Typeface.createFromAsset(getAssets(), "digital.ttf");
         numBombsTextView.setTypeface(font);
-        timer.setTypeface(font);
-        timer.setText("00:00");
+        timerTextView.setTypeface(font);
+        timerTextView.setText("00:00");
         if (numOfBombs < 100) numBombsTextView.setText("0" + numOfBombs);
         else
             numBombsTextView.setText(numOfBombs);
@@ -193,20 +193,20 @@ public class MainActivity extends Activity {
             ++secondsPassed;
 
             if (secondsPassed < 10) {
-                timer.setText("00:0" + Integer.toString(secondsPassed));
+                timerTextView.setText("00:0" + Integer.toString(secondsPassed));
             } else if (secondsPassed < 60) {
-                timer.setText("00:" + Integer.toString(secondsPassed));
+                timerTextView.setText("00:" + Integer.toString(secondsPassed));
             } else {
                 int minsPassed = secondsPassed / 60;
                 int secondsPassedMod = secondsPassed % 60;
                 if (minsPassed < 10 && secondsPassedMod < 10)
-                    timer.setText("0" + Integer.toString(minsPassed) + ":0" + Integer.toString(secondsPassedMod));
+                    timerTextView.setText("0" + Integer.toString(minsPassed) + ":0" + Integer.toString(secondsPassedMod));
                 else if (minsPassed < 10 && secondsPassedMod < 60)
-                    timer.setText("0" + Integer.toString(minsPassed) + ":" + Integer.toString(secondsPassedMod));
+                    timerTextView.setText("0" + Integer.toString(minsPassed) + ":" + Integer.toString(secondsPassedMod));
                 else if (minsPassed < 100 && secondsPassedMod < 10)
-                    timer.setText(Integer.toString(minsPassed) + ":0" + Integer.toString(secondsPassedMod));
+                    timerTextView.setText(Integer.toString(minsPassed) + ":0" + Integer.toString(secondsPassedMod));
                 else if (minsPassed < 100 && secondsPassedMod < 60)
-                    timer.setText(Integer.toString(minsPassed) + ":" + Integer.toString(secondsPassedMod));
+                    timerTextView.setText(Integer.toString(minsPassed) + ":" + Integer.toString(secondsPassedMod));
                 else {
                     finishGame();
                 }
