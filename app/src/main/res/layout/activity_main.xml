@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +12,7 @@
     android:weightSum="8"
     tools:context="com.skypayjm.app.minesweeper.view.MainActivity_">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="7">
@@ -25,36 +26,77 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:background="@null"
                 android:clickable="true"
                 android:elevation="10dp"
-                android:src="@drawable/smiley_button_selector"
-                android:background="@null"/>
+                android:src="@drawable/smiley_button_selector" />
 
-            <Button
-                android:id="@+id/newGame"
+            <!--<Button-->
+            <!--android:id="@+id/newGame"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toLeftOf="@id/validate"-->
+            <!--android:layout_toStartOf="@id/validate"-->
+            <!--android:background="@drawable/shadowbtn"-->
+            <!--android:paddingLeft="@dimen/btn_padding"-->
+            <!--android:paddingRight="@dimen/btn_padding"-->
+            <!--android:text="@string/new_game"-->
+            <!--android:textColor="@color/Indigo" />-->
+
+            <TextView
+                android:id="@+id/timerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/validate"
                 android:layout_toStartOf="@id/validate"
-                android:background="@drawable/shadowbtn"
-                android:paddingLeft="@dimen/btn_padding"
-                android:paddingRight="@dimen/btn_padding"
-                android:text="@string/new_game"
-                android:textColor="@color/Indigo" />
+                android:text="@string/timerText"
+                android:textSize="45sp"
+                android:textColor="@color/Indigo"/>
 
-            <Button
-                android:id="@+id/cheatGame"
+            <TextView
+                android:id="@+id/numBombsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/validate"
                 android:layout_toRightOf="@id/validate"
-                android:background="@drawable/shadowbtn"
-                android:paddingLeft="@dimen/btn_padding"
-                android:paddingRight="@dimen/btn_padding"
-                android:text="@string/cheat"
-                android:textColor="@color/Indigo" />
+                android:text="@string/numBombs"
+                android:textSize="45sp"
+                android:textColor="@color/Indigo"/>
+
+            <!--<com.balysv.materialripple.MaterialRippleLayout-->
+            <!--android:id="@+id/ripple"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toEndOf="@id/validate"-->
+            <!--android:layout_toRightOf="@id/validate"-->
+            <!--app:mrl_rippleAlpha="0.1"-->
+            <!--app:mrl_rippleBackground="#FFFFFF"-->
+            <!--app:mrl_rippleColor="@color/Green"-->
+            <!--app:mrl_rippleDelayClick="true"-->
+            <!--app:mrl_rippleDimension="10dp"-->
+            <!--app:mrl_rippleDuration="350"-->
+            <!--app:mrl_rippleFadeDuration="75"-->
+            <!--app:mrl_rippleHover="true"-->
+            <!--app:mrl_rippleInAdapter="false"-->
+            <!--app:mrl_rippleOverlay="true"-->
+            <!--app:mrl_ripplePersistent="true"-->
+            <!--app:mrl_rippleRoundedCorners="20dp">-->
+
+            <!--<Button-->
+            <!--android:id="@+id/cheatGame"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/ic_lock"-->
+            <!--android:clickable="true"-->
+            <!--android:elevation="10dp" />-->
+            <!--</com.balysv.materialripple.MaterialRippleLayout>-->
+
         </RelativeLayout>
     </LinearLayout>
 
@@ -72,7 +114,7 @@
             <TableLayout
                 android:id="@+id/MinesweepGridTable"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.skypayjm.app.minesweeper.model.TwoDScrollView>
     </RelativeLayout>
 </LinearLayout>

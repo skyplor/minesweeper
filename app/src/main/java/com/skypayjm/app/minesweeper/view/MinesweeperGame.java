@@ -23,6 +23,8 @@ public class MinesweeperGame extends Activity implements Communicator {
     @ViewById
     TextView title;
 
+    String mainFragTag = "MainFragment";
+    String diffFragTag = "DifficultyFragment";
     MainFragment mainFragment;
     DifficultyLevelFragment difficultyLevelFragment;
     FragmentManager fragmentManager;
@@ -37,10 +39,10 @@ public class MinesweeperGame extends Activity implements Communicator {
             // So we will create the main fragment and put into this activity.
             mainFragment = new MainFragment_();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.main_layout, mainFragment, "MainFragment");
+            transaction.add(R.id.main_layout, mainFragment, mainFragTag);
             transaction.commit();
         } else {
-            mainFragment = (MainFragment_) getFragmentManager().findFragmentByTag("MainFragment");
+            mainFragment = (MainFragment_) getFragmentManager().findFragmentByTag(mainFragTag);
         }
     }
 
@@ -85,10 +87,10 @@ public class MinesweeperGame extends Activity implements Communicator {
                 R.animator.card_flip_right_in, R.animator.card_flip_right_out,
                 R.animator.card_flip_left_in, R.animator.card_flip_left_out);
 
-        fragmentTransaction.replace(R.id.main_layout, difficultyLevelFragment, "DifficultyFragment");
+        fragmentTransaction.replace(R.id.main_layout, difficultyLevelFragment, diffFragTag);
         // This portion is crucial in that we push this transaction into the backstack so users can
         // go back to seeing the main fragment when they press the back button
-        fragmentTransaction.addToBackStack("MainFragment");
+        fragmentTransaction.addToBackStack(mainFragTag);
         fragmentTransaction.commit();
     }
 

@@ -76,4 +76,6 @@
     <string name="custom_rows_hint">Enter a value between 1–30</string>
     <string name="custom_columns_hint">Enter a value between 1–30</string>
     <string name="custom_mines_hint">Enter a value between 1–500</string>
+    <string name="numBombs">099</string>
+    <string name="timerText">00:00</string>
 </resources>

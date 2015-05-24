@@ -188,4 +188,19 @@ public class Util {
                 return R.drawable.sprite_blank;
         }
     }
+
+    // This method will return the timing in minutes and seconds
+    public int[] getSplitTime(int secondsPassed) {
+        int[] result = new int[2];
+        if (secondsPassed < 60) {
+            result[1] = secondsPassed;
+        } else {
+            int minsPassed = secondsPassed / 60;
+            int secondsPassedMod = secondsPassed % 60;
+
+            result[0] = minsPassed;
+            result[1] = secondsPassedMod;
+        }
+        return result;
+    }
 }
