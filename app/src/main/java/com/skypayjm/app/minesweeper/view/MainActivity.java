@@ -4,15 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.skypayjm.app.minesweeper.R;
 import com.skypayjm.app.minesweeper.model.Tile;
@@ -40,16 +39,15 @@ public class MainActivity extends Activity {
     private boolean isGameStarted = false;
     private boolean cheatModeSet;
     private Util util;
+    private Handler timerHandler;
+    private int secondsPassed = 0;
     private static final int WIN = 0, LOSE = 1, RESTART = 2;
 
     @ViewById
     ImageButton validate;
 
     @ViewById
-    Button cheatGame;
-
-    @ViewById
-    Button newGame;
+    TextView timer, numBombsTextView;
 
     @ViewById
     TableLayout MinesweepGridTable;
@@ -63,17 +61,17 @@ public class MainActivity extends Activity {
         numOfBombs = intent.getIntExtra("numOfBombs", 0);
     }
 
-    @Click(R.id.newGame)
-    void handleNewGameClick() {
-        if (isGameStarted) {
-            // Have a confirmation dialog
-            create_showDialog("Are you sure you want to restart?", "Yes", "No", RESTART);
-        } else {
-            //clear the board first
-            MinesweepGridTable.removeAllViews();
-            resetGame();
-        }
-    }
+//    @Click(R.id.newGame)
+//    void handleNewGameClick() {
+//        if (isGameStarted) {
+//            // Have a confirmation dialog
+//            create_showDialog("Are you sure you want to restart?", "Yes", "No", RESTART);
+//        } else {
+//            //clear the board first
+//            MinesweepGridTable.removeAllViews();
+//            resetGame();
+//        }
+//    }
 
     /**
      * @param msg      The message to be displayed
@@ -118,12 +116,15 @@ public class MainActivity extends Activity {
         validate.setEnabled(false);
         isGameStarted = false;
         cheatModeSet = false;
-        cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
-        cheatGame.setTypeface(null, Typeface.NORMAL);
+//        cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
+//        cheatGame.setTypeface(null, Typeface.NORMAL);
+//        cheatGame.setBackgroundResource(R.drawable.ic_lock);
         areMinesSet = false;
 
         util = new Util(rows, columns);
         tileDimension = util.getDeviceWidth(this) / 10;
+        secondsPassed = 0;
+        startTimer();
         startNewGame(rows, columns, numOfBombs);
     }
 
@@ -138,32 +139,90 @@ public class MainActivity extends Activity {
         }
     }
 
-    @Click(R.id.cheatGame)
-    void handleCheatClick() {
-        //on depress, cheat button text will change to red.
-        cheatModeSet = !cheatModeSet;
-        if (cheatModeSet) {
-            Toast.makeText(this, "Cheat Mode On", Toast.LENGTH_SHORT).show();
-            cheatGame.setTextColor(Color.RED);
-            cheatGame.setTypeface(null, Typeface.BOLD);
-        } else {
-            Toast.makeText(this, "Cheat Mode Off", Toast.LENGTH_SHORT).show();
-            cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
-            cheatGame.setTypeface(null, Typeface.NORMAL);
-        }
-
-    }
+//    @Click(R.id.cheatGame)
+//    void handleCheatClick() {
+    //on depress, cheat button text will change to red.
+//        cheatModeSet = !cheatModeSet;
+//        if (cheatModeSet) {
+//            Toast.makeText(this, "Cheat Mode On", Toast.LENGTH_SHORT).show();
+////            cheatGame.setTextColor(Color.RED);
+////            cheatGame.setTypeface(null, Typeface.BOLD);
+//            cheatGame.setBackgroundResource(R.drawable.ic_unlock);
+//        } else {
+//            Toast.makeText(this, "Cheat Mode Off", Toast.LENGTH_SHORT).show();
+////            cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
+////            cheatGame.setTypeface(null, Typeface.NORMAL);
+//            cheatGame.setBackgroundResource(R.drawable.ic_lock);
+//        }
+//
+//    }
 
     @AfterViews
     void init() {
         overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_shrink_fade_out_from_bottom);
+        Typeface font = Typeface.createFromAsset(getAssets(), "digital.ttf");
+        numBombsTextView.setTypeface(font);
+        timer.setTypeface(font);
+        timer.setText("00:00");
+        if (numOfBombs < 100) numBombsTextView.setText("0" + numOfBombs);
+        else
+            numBombsTextView.setText(numOfBombs);
         if (!isGameStarted) validate.setEnabled(false);
-
+        timerHandler = new Handler();
         resetGame();
     }
 
+    //    @Background
+    void startTimer() {
+        if (secondsPassed == 0) {
+            timerHandler.removeCallbacks(updateTimeElasped);
+            // tell timer to run call back after 1 second
+            timerHandler.postDelayed(updateTimeElasped, 1000);
+        }
+    }
+
+    void stopTimer() {
+        // disable call backs
+        timerHandler.removeCallbacks(updateTimeElasped);
+    }
+
+    // timer call back when timer is ticked
+    private Runnable updateTimeElasped = new Runnable() {
+        public void run() {
+            long currentMilliseconds = System.currentTimeMillis();
+            ++secondsPassed;
+
+            if (secondsPassed < 10) {
+                timer.setText("00:0" + Integer.toString(secondsPassed));
+            } else if (secondsPassed < 60) {
+                timer.setText("00:" + Integer.toString(secondsPassed));
+            } else {
+                int minsPassed = secondsPassed / 60;
+                int secondsPassedMod = secondsPassed % 60;
+                if (minsPassed < 10 && secondsPassedMod < 10)
+                    timer.setText("0" + Integer.toString(minsPassed) + ":0" + Integer.toString(secondsPassedMod));
+                else if (minsPassed < 10 && secondsPassedMod < 60)
+                    timer.setText("0" + Integer.toString(minsPassed) + ":" + Integer.toString(secondsPassedMod));
+                else if (minsPassed < 100 && secondsPassedMod < 10)
+                    timer.setText(Integer.toString(minsPassed) + ":0" + Integer.toString(secondsPassedMod));
+                else if (minsPassed < 100 && secondsPassedMod < 60)
+                    timer.setText(Integer.toString(minsPassed) + ":" + Integer.toString(secondsPassedMod));
+                else {
+                    finishGame();
+                }
+            }
+
+            // add notification
+            timerHandler.postAtTime(this, currentMilliseconds);
+            // notify to call back after 1 seconds
+            // basically to remain in the timer loop
+            timerHandler.postDelayed(updateTimeElasped, 1000);
+        }
+    };
+
     public void onBackPressed() {
         super.onBackPressed();
+        stopTimer();
         overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_shrink_fade_out_from_bottom);
     }
 
@@ -223,6 +282,7 @@ public class MainActivity extends Activity {
     }
 
     private void finishGame() {
+        stopTimer();
         // Have an info dialog
         create_showDialog("Lost the game? No worries, let's retry!", "Retry", "", LOSE);
     }
@@ -239,8 +299,10 @@ public class MainActivity extends Activity {
     }
 
     private void winGame() {
+        stopTimer();
+        int[] splitTime = util.getSplitTime(secondsPassed);
         // Have an info dialog
-        create_showDialog("Congrats on beating the game!", "New Game", "Cancel", WIN);
+        create_showDialog("Congrats on beating the game! You've used: " + splitTime[0] + "min " + splitTime[1] + "s.", "New Game", "Cancel", WIN);
     }
 
     // This method will generate out the actual minegrid and display it out for the player to start playing
