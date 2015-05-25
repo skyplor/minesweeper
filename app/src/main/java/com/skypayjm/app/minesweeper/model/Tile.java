@@ -15,9 +15,10 @@ import java.util.List;
  * Created by Sky on 5/12/2015.
  */
 @EView
-public class Tile extends Button {
+public class Tile extends Button{
     private boolean isRevealed;
     private boolean isBomb;
+    private boolean isFlag;
     // Like a graph with its adj nodes
     private List<Tile> adjTiles;
     private int bombCount;
@@ -32,6 +33,7 @@ public class Tile extends Button {
 
     public void setDefaults() {
         isBomb = false;
+        isFlag = false;
         isRevealed = false;
         adjTiles = new ArrayList<Tile>();
         this.setBackgroundResource(R.drawable.sprite_up);
@@ -63,5 +65,13 @@ public class Tile extends Button {
 
     public List<Tile> getAdjTiles() {
         return adjTiles;
+    }
+
+    public boolean isFlag() {
+        return isFlag;
+    }
+
+    public void setIsFlag(boolean isFlag) {
+        this.isFlag = isFlag;
     }
 }

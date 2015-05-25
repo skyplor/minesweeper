@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_flag"
+        android:checkable="true"
+        android:icon="@drawable/ic_action_flag"
+        android:orderInCategory="1"
+        android:title="@string/menu_flagText"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_cheat"
+        android:checkable="true"
+        android:icon="@drawable/ic_action_lock"
+        android:orderInCategory="2"
+        android:title="@string/menu_cheatText"
+        app:showAsAction="ifRoom" />
+</menu>

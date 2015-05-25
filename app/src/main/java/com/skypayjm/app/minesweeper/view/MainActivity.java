@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
@@ -20,13 +22,19 @@ import com.skypayjm.app.minesweeper.util.Util;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Fullscreen;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 
 /**
  * This activity is the actual screen where players will play on.
  * It consists of the New Game, Validate and Cheat buttons as well as the actual grid/board
  */
+@Fullscreen
 @EActivity(R.layout.activity_main)
+@OptionsMenu(R.menu.mainmenu)
 public class MainActivity extends Activity {
 
     public Tile[][] tiles;
@@ -37,11 +45,13 @@ public class MainActivity extends Activity {
     private int numOfBombs;
     private boolean areMinesSet;
     private boolean isGameStarted = false;
-    private boolean cheatModeSet;
+    private boolean isCheatMode;
     private Util util;
     private Handler timerHandler;
     private int secondsPassed = 0;
     private static final int WIN = 0, LOSE = 1, RESTART = 2;
+    private boolean isFlagMode;
+    private int numOfFlags;
 
     @ViewById
     ImageButton validate;
@@ -52,6 +62,23 @@ public class MainActivity extends Activity {
     @ViewById
     TableLayout MinesweepGridTable;
 
+    @OptionsMenuItem
+    MenuItem menu_flag;
+    @OptionsMenuItem
+    MenuItem menu_cheat;
+
+    @OptionsItem(R.id.menu_cheat)
+    void cheatMode() {
+        isCheatMode = !isCheatMode;
+        menu_cheat.setChecked(isCheatMode);
+    }
+
+    @OptionsItem(R.id.menu_flag)
+    void flagMode() {
+        isFlagMode = !isFlagMode;
+        menu_flag.setChecked(isFlagMode);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +88,12 @@ public class MainActivity extends Activity {
         numOfBombs = intent.getIntExtra("numOfBombs", 0);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        menu_cheat.setChecked(isCheatMode);
+        menu_flag.setChecked(isFlagMode);
+        return true;
+    }
 //    @Click(R.id.newGame)
 //    void handleNewGameClick() {
 //        if (isGameStarted) {
@@ -115,12 +148,14 @@ public class MainActivity extends Activity {
     private void resetGame() {
         validate.setEnabled(false);
         isGameStarted = false;
-        cheatModeSet = false;
+        isCheatMode = false;
 //        cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
 //        cheatGame.setTypeface(null, Typeface.NORMAL);
 //        cheatGame.setBackgroundResource(R.drawable.ic_lock);
         areMinesSet = false;
-
+        isFlagMode = false;
+        numOfFlags = 0;
+        setNumberOfBombs();
         util = new Util(rows, columns);
         tileDimension = util.getDeviceWidth(this) / 10;
         secondsPassed = 0;
@@ -164,12 +199,16 @@ public class MainActivity extends Activity {
         numBombsTextView.setTypeface(font);
         timerTextView.setTypeface(font);
         timerTextView.setText("00:00");
-        if (numOfBombs < 100) numBombsTextView.setText("0" + numOfBombs);
-        else
-            numBombsTextView.setText(numOfBombs);
+        setNumberOfBombs();
         if (!isGameStarted) validate.setEnabled(false);
         timerHandler = new Handler();
         resetGame();
+    }
+
+    private void setNumberOfBombs() {
+        if (numOfBombs < 100) numBombsTextView.setText("0" + numOfBombs);
+        else
+            numBombsTextView.setText(numOfBombs);
     }
 
     //    @Background
@@ -264,12 +303,14 @@ public class MainActivity extends Activity {
                             tiles = util.setTilesAdj(tiles);
                         }
 
-                        if (cheatModeSet) {
+                        if (isCheatMode) {
                             // We will do this temp reveal only when the number wasn't revealed previously
                             if (!tiles[currentRow][currentColumn].isRevealed()) {
                                 // We will reveal the particular tile for 1s before turning it back
                                 util.tempReveal(tiles[currentRow][currentColumn]);
                             }
+                        } else if (isFlagMode) {
+                            setFlags(tiles[currentRow][currentColumn], numOfBombs);
                         } else {
                             // check if this tile is a bomb. If it is, reveal() will return true and we finishes this game
                             if (util.reveal(tiles[currentRow][currentColumn]))
@@ -278,8 +319,46 @@ public class MainActivity extends Activity {
                         }
                     }
                 });
+                tiles[row][column].setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (v instanceof Tile) {
+                            Tile tile = (Tile) v;
+                            if (setFlags(tile, numOfBombs)) return true;
+                        }
+                        return true;
+                    }
+                });
             }
         }
+
+    }
+
+    private boolean setFlags(Tile tile, int numOfBombs) {
+        boolean flag = tile.isFlag();
+        if (flag) {
+            numOfFlags--;
+            tile.setBackgroundResource(R.drawable.sprite_up);
+            int curBombs = numOfBombs - numOfFlags;
+            if (curBombs < 10) numBombsTextView.setText("00" + curBombs);
+            else if (curBombs < 100) numBombsTextView.setText("0" + curBombs);
+            else
+                numBombsTextView.setText(curBombs);
+        } else {
+            int curBombs = numOfBombs - numOfFlags;
+            if (curBombs > 0) {
+                numOfFlags++;
+                tile.setBackgroundResource(R.drawable.sprite_flag);
+                curBombs = numOfBombs - numOfFlags;
+                if (curBombs < 10) numBombsTextView.setText("00" + curBombs);
+                else if (curBombs < 100)
+                    numBombsTextView.setText("0" + curBombs);
+                else
+                    numBombsTextView.setText(curBombs);
+            } else return true;
+        }
+        tile.setIsFlag(!flag);
+        return false;
     }
 
     private void finishGame() {

@@ -127,30 +127,32 @@ public class Util {
     // This method will first check if this tile has a bomb. If it has, it is revealed immediately and returned as true.
     // If false, we check the tile and if its bomb count is 0, we will do a graph traversal to reveal all its adjacent tiles.
     public boolean reveal(Tile btn) {
-        if (btn.isBomb()) {
-            btn.setBackgroundResource(getBackgroundResource(btn.isBomb(), btn.getBombCount()));
-            btn.setIsRevealed(true);
-        } else {
-            Queue<Tile> queue = new LinkedList<Tile>();
-            queue.add(btn);
-            while (!queue.isEmpty()) {
-                Tile curTile = queue.remove();
-                if (!curTile.isRevealed()) {
-                    // set this tile as revealed and we continue to reveal
-                    curTile.setIsRevealed(true);
-                    curTile.setBackgroundResource(getBackgroundResource(btn.isBomb(), curTile.getBombCount()));
-                    if (curTile.getBombCount() == 0) {
-                        // enqueue all the adj tiles
-                        List<Tile> adjTiles = curTile.getAdjTiles();
-                        for (int i = 0; i < adjTiles.size(); i++)
-                            if (adjTiles.get(i) != null)
-                                queue.add(adjTiles.get(i));
+        if (!btn.isFlag()) {
+            if (btn.isBomb()) {
+                btn.setBackgroundResource(getBackgroundResource(btn.isBomb(), btn.getBombCount()));
+                btn.setIsRevealed(true);
+            } else {
+                Queue<Tile> queue = new LinkedList<Tile>();
+                queue.add(btn);
+                while (!queue.isEmpty()) {
+                    Tile curTile = queue.remove();
+                    if (!curTile.isRevealed() && !curTile.isFlag()) {
+                        // set this tile as revealed and we continue to reveal
+                        curTile.setIsRevealed(true);
+                        curTile.setBackgroundResource(getBackgroundResource(btn.isBomb(), curTile.getBombCount()));
+                        if (curTile.getBombCount() == 0) {
+                            // enqueue all the adj tiles
+                            List<Tile> adjTiles = curTile.getAdjTiles();
+                            for (int i = 0; i < adjTiles.size(); i++)
+                                if (adjTiles.get(i) != null)
+                                    queue.add(adjTiles.get(i));
+                        }
                     }
                 }
             }
-        }
+            return btn.isBomb();
+        } else return false;
 
-        return btn.isBomb();
     }
 
     public void tempReveal(Tile btn) {

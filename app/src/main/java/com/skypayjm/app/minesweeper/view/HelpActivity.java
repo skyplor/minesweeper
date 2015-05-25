@@ -8,9 +8,11 @@ import com.skypayjm.app.minesweeper.R;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.TextRes;
 
+@Fullscreen
 @EActivity(R.layout.activity_help)
 public class HelpActivity extends Activity {
 

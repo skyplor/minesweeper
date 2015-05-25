@@ -10,12 +10,14 @@ import com.skypayjm.app.minesweeper.R;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
 /**
  * This activity allows players to create mine grids of various sizes and play with it
  * Created by Sky on 5/14/2015.
  */
+@Fullscreen
 @EActivity(R.layout.activity_options)
 public class OptionsActivity extends Activity {
 

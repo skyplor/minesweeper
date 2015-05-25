@@ -78,4 +78,6 @@
     <string name="custom_mines_hint">Enter a value between 1–500</string>
     <string name="numBombs">099</string>
     <string name="timerText">00:00</string>
+    <string name="menu_cheatText">Cheat</string>
+    <string name="menu_flagText">Flag</string>
 </resources>

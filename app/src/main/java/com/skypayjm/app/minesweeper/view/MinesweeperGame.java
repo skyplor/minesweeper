@@ -16,8 +16,10 @@ import com.skypayjm.app.minesweeper.util.Communicator;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
+@Fullscreen
 @EActivity(R.layout.activity_minesweeper_game)
 public class MinesweeperGame extends Activity implements Communicator {
     @ViewById
