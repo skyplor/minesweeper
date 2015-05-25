@@ -23,8 +23,10 @@
 
             <ImageButton
                 android:id="@+id/validate"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
@@ -55,8 +57,20 @@
                 android:layout_toLeftOf="@id/validate"
                 android:layout_toStartOf="@id/validate"
                 android:text="@string/timerText"
-                android:textSize="45sp"
-                android:textColor="@color/Indigo"/>
+                android:textColor="@color/Indigo"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/flagBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/flag_mode"
+                android:clickable="true" />
 
             <TextView
                 android:id="@+id/numBombsTextView"
@@ -66,8 +80,8 @@
                 android:layout_toEndOf="@id/validate"
                 android:layout_toRightOf="@id/validate"
                 android:text="@string/numBombs"
-                android:textSize="45sp"
-                android:textColor="@color/Indigo"/>
+                android:textColor="@color/Indigo"
+                android:textSize="30sp" />
 
             <!--<com.balysv.materialripple.MaterialRippleLayout-->
             <!--android:id="@+id/ripple"-->

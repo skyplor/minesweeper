@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,9 +23,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
-import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 
 /**
@@ -62,21 +60,36 @@ public class MainActivity extends Activity {
     @ViewById
     TableLayout MinesweepGridTable;
 
-    @OptionsMenuItem
-    MenuItem menu_flag;
-    @OptionsMenuItem
-    MenuItem menu_cheat;
+    @ViewById
+    Button flagBtn;
+//    @OptionsMenuItem
+//    MenuItem menu_flag;
+//    @OptionsMenuItem
+//    MenuItem menu_cheat;
+//
+//    @OptionsItem(R.id.menu_cheat)
+//    void cheatMode() {
+//        isCheatMode = !isCheatMode;
+//        menu_cheat.setChecked(isCheatMode);
+//    }
+//
+//    @OptionsItem(R.id.menu_flag)
+//    void flagMode() {
+//        isFlagMode = !isFlagMode;
+//        menu_flag.setChecked(isFlagMode);
+//    }
 
-    @OptionsItem(R.id.menu_cheat)
-    void cheatMode() {
-        isCheatMode = !isCheatMode;
-        menu_cheat.setChecked(isCheatMode);
-    }
-
-    @OptionsItem(R.id.menu_flag)
+    @Click(R.id.flagBtn)
     void flagMode() {
+        int width = flagBtn.getWidth();
+        int height = flagBtn.getHeight();
+        Log.d("MainActivity", "Button height and width: " + height + ", " + width);
         isFlagMode = !isFlagMode;
-        menu_flag.setChecked(isFlagMode);
+        if (isFlagMode) {
+            flagBtn.setBackgroundResource(R.drawable.ic_flag_mode_down);
+        } else {
+            flagBtn.setBackgroundResource(R.drawable.ic_flag_mode);
+        }
     }
 
     @Override
@@ -88,12 +101,12 @@ public class MainActivity extends Activity {
         numOfBombs = intent.getIntExtra("numOfBombs", 0);
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
-        menu_cheat.setChecked(isCheatMode);
-        menu_flag.setChecked(isFlagMode);
-        return true;
-    }
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        menu_cheat.setChecked(isCheatMode);
+//        menu_flag.setChecked(isFlagMode);
+//        return true;
+//    }
 //    @Click(R.id.newGame)
 //    void handleNewGameClick() {
 //        if (isGameStarted) {
@@ -158,6 +171,7 @@ public class MainActivity extends Activity {
         setNumberOfBombs();
         util = new Util(rows, columns);
         tileDimension = util.getDeviceWidth(this) / 10;
+        Log.d("MainActivity", "tileDimension: " + tileDimension);
         secondsPassed = 0;
         startTimer();
         startNewGame(rows, columns, numOfBombs);
@@ -284,6 +298,56 @@ public class MainActivity extends Activity {
                 // particular instance of tile only
                 final int currentRow = row;
                 final int currentColumn = column;
+                // add Touch Listener so validate button will change as well
+//                tiles[row][column].setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
+//
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                            validate.setBackgroundResource(R.drawable.ic_smiley_down);
+//                        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+//                            validate.setBackgroundResource(R.drawable.ic_smiley);
+//                        }
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public void onClick() {
+//
+//                        if (!isGameStarted) {
+//                            isGameStarted = true;
+//                            validate.setEnabled(true);
+//                        }
+//
+//                        // set mines on first click
+//                        if (!areMinesSet) {
+//                            areMinesSet = true;
+//                            tiles = util.randomizeBombs(currentRow, currentColumn, numOfBombs, tiles);
+//                            tiles = util.setTilesAdj(tiles);
+//                        }
+//
+//                        if (isFlagMode) {
+////                            // We will do this temp reveal only when the number wasn't revealed previously
+////                            if (!tiles[currentRow][currentColumn].isRevealed()) {
+////                                // We will reveal the particular tile for 1s before turning it back
+////                                util.tempReveal(tiles[currentRow][currentColumn]);
+////                            }
+//                            if (!tiles[currentRow][currentColumn].isRevealed()) {
+//                                setFlags(tiles[currentRow][currentColumn], numOfBombs);
+//                            }
+//                        } else {
+//                            // check if this tile is a bomb. If it is, reveal() will return true and we finishes this game
+//                            if (util.reveal(tiles[currentRow][currentColumn]))
+//                                // Oops, game over
+//                                finishGame();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onLongClick() {
+//                        setFlags(tiles[currentRow][currentColumn], numOfBombs);
+//                    }
+//                });
 
                 // add Click Listener
                 // this is treated as Left Mouse click
@@ -303,14 +367,15 @@ public class MainActivity extends Activity {
                             tiles = util.setTilesAdj(tiles);
                         }
 
-                        if (isCheatMode) {
-                            // We will do this temp reveal only when the number wasn't revealed previously
+                        if (isFlagMode) {
+//                            // We will do this temp reveal only when the number wasn't revealed previously
+//                            if (!tiles[currentRow][currentColumn].isRevealed()) {
+//                                // We will reveal the particular tile for 1s before turning it back
+//                                util.tempReveal(tiles[currentRow][currentColumn]);
+//                            }
                             if (!tiles[currentRow][currentColumn].isRevealed()) {
-                                // We will reveal the particular tile for 1s before turning it back
-                                util.tempReveal(tiles[currentRow][currentColumn]);
+                                setFlags(tiles[currentRow][currentColumn], numOfBombs);
                             }
-                        } else if (isFlagMode) {
-                            setFlags(tiles[currentRow][currentColumn], numOfBombs);
                         } else {
                             // check if this tile is a bomb. If it is, reveal() will return true and we finishes this game
                             if (util.reveal(tiles[currentRow][currentColumn]))
@@ -363,6 +428,7 @@ public class MainActivity extends Activity {
 
     private void finishGame() {
         stopTimer();
+        validate.setBackgroundResource(R.drawable.ic_smiley_fail);
         // Have an info dialog
         create_showDialog("Lost the game? No worries, let's retry!", "Retry", "", LOSE);
     }
@@ -381,6 +447,8 @@ public class MainActivity extends Activity {
     private void winGame() {
         stopTimer();
         int[] splitTime = util.getSplitTime(secondsPassed);
+
+        validate.setBackgroundResource(R.drawable.ic_smiley_success);
         // Have an info dialog
         create_showDialog("Congrats on beating the game! You've used: " + splitTime[0] + "min " + splitTime[1] + "s.", "New Game", "Cancel", WIN);
     }
