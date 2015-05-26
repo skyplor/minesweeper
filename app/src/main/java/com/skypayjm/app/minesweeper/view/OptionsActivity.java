@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.andexert.library.RippleView;
 import com.skypayjm.app.minesweeper.R;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
@@ -24,29 +24,36 @@ public class OptionsActivity extends Activity {
     @ViewById
     EditText rowsEditText, columnsEditText, numBombsEditText;
 
-    @Click
-    void customGameBtn() {
-        Intent newGameIntent = new Intent(OptionsActivity.this, MainActivity_.class);
-        int rows = 0, columns = 0, numOfBombs = 0;
-        if (rowsEditText.getText().length() > 0)
-            rows = Integer.parseInt(rowsEditText.getText().toString());
-        if (columnsEditText.getText().length() > 0)
-            columns = Integer.parseInt(columnsEditText.getText().toString());
-        if (numBombsEditText.getText().length() > 0)
-            numOfBombs = Integer.parseInt(numBombsEditText.getText().toString());
-        if (isValidInput(rows, columns, numOfBombs)) {
-            newGameIntent.putExtra("rows", rows);
-            newGameIntent.putExtra("columns", columns);
-            newGameIntent.putExtra("numOfBombs", numOfBombs);
-            startActivity(newGameIntent);
-        } else {
-            Toast.makeText(this, "Please enter valid numbers in the fields for rows, columns and number of mines", Toast.LENGTH_LONG).show();
-        }
-    }
+    @ViewById
+    RippleView rippleCustom;
 
     @AfterViews
     void init() {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        rippleCustom.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+
+            @Override
+            public void onComplete(RippleView rippleView) {
+                // Tell activity to change to MainActivity, passing the difficulty variables over
+                Intent newGameIntent = new Intent(OptionsActivity.this, MainActivity_.class);
+                int rows = 0, columns = 0, numOfBombs = 0;
+                if (rowsEditText.getText().length() > 0)
+                    rows = Integer.parseInt(rowsEditText.getText().toString());
+                if (columnsEditText.getText().length() > 0)
+                    columns = Integer.parseInt(columnsEditText.getText().toString());
+                if (numBombsEditText.getText().length() > 0)
+                    numOfBombs = Integer.parseInt(numBombsEditText.getText().toString());
+                if (isValidInput(rows, columns, numOfBombs)) {
+                    newGameIntent.putExtra("rows", rows);
+                    newGameIntent.putExtra("columns", columns);
+                    newGameIntent.putExtra("numOfBombs", numOfBombs);
+                    startActivity(newGameIntent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please enter valid numbers in the fields for rows, columns and number of mines", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        });
     }
 
     public void onBackPressed() {

@@ -3,11 +3,13 @@ package com.skypayjm.app.minesweeper.view;
 import android.app.Activity;
 import android.app.Fragment;
 
+import com.andexert.library.RippleView;
 import com.skypayjm.app.minesweeper.R;
 import com.skypayjm.app.minesweeper.util.Communicator;
 
-import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 
 /**
@@ -27,21 +29,37 @@ public class DifficultyLevelFragment extends Fragment {
         communicator = (Communicator) activity;
     }
 
-    @Click
-    void beginnerBtn() {
-        // Tell activity to change to MainActivity, passing the difficulty variables over
-        communicator.goToNewGame(8, 8, 10);
-    }
+    @ViewById
+    RippleView rippleBeginner, rippleIntermediate, rippleExpert;
 
-    @Click
-    void intermediateBtn() {
-        // Tell activity to change to MainActivity, passing the difficulty variables over
-        communicator.goToNewGame(16, 16, 40);
-    }
+    @AfterViews
+    void init(){
+        rippleBeginner.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
 
-    @Click
-    void expertBtn() {
-        // Tell activity to change to MainActivity, passing the difficulty variables over
-        communicator.goToNewGame(16, 30, 99);
+            @Override
+            public void onComplete(RippleView rippleView) {
+                // Tell activity to change to MainActivity, passing the difficulty variables over
+                communicator.goToNewGame(8, 8, 10);
+            }
+
+        });
+        rippleIntermediate.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+
+            @Override
+            public void onComplete(RippleView rippleView) {
+                // Tell activity to change to MainActivity, passing the difficulty variables over
+                communicator.goToNewGame(16, 16, 40);
+            }
+
+        });
+        rippleExpert.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+
+            @Override
+            public void onComplete(RippleView rippleView) {
+                // Tell activity to change to MainActivity, passing the difficulty variables over
+                communicator.goToNewGame(16, 30, 99);
+            }
+
+        });
     }
 }

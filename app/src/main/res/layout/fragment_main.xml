@@ -1,35 +1,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.skypayjm.app.minesweeper.view.MainFragment">
 
-    <Button
-        android:id="@+id/newBtn"
-        android:layout_width="200dp"
+    <com.andexert.library.RippleView
+        android:id="@+id/rippleNewGame"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@drawable/shadowbtn"
-        android:text="@string/new_game"
-        android:textColor="@color/Indigo" />
+        app:rv_color="@color/Black"
+        app:rv_alpha="42">
 
-    <Button
-        android:id="@+id/optionsBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@drawable/shadowbtn"
-        android:text="@string/options"
-        android:textColor="@color/Indigo" />
+        <Button
+            android:id="@+id/newBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:text="@string/new_game"
+            android:textColor="@color/SeaGreen" />
+    </com.andexert.library.RippleView>
 
-    <Button
-        android:id="@+id/helpBtn"
-        android:layout_width="200dp"
+    <View android:layout_width="match_parent" android:layout_height="12dp"/>
+    <com.andexert.library.RippleView
+        android:id="@+id/rippleOptions"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@drawable/shadowbtn"
-        android:text="@string/help"
-        android:textColor="@color/Indigo" />
+        app:rv_color="@color/Black"
+        app:rv_alpha="42">
+
+        <Button
+            android:id="@+id/optionsBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:text="@string/options"
+            android:textColor="@color/SeaGreen" />
+    </com.andexert.library.RippleView>
+
+    <View android:layout_width="match_parent" android:layout_height="12dp"/>
+    <com.andexert.library.RippleView
+        android:id="@+id/rippleHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rv_color="@color/Black"
+        app:rv_alpha="42">
+
+        <Button
+            android:id="@+id/helpBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:text="@string/help"
+            android:textColor="@color/SeaGreen" />
+    </com.andexert.library.RippleView>
 
 </LinearLayout>

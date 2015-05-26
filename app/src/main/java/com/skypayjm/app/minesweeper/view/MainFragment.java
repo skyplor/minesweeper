@@ -6,10 +6,11 @@ import android.app.Fragment;
 import android.view.animation.Animation;
 import android.widget.Button;
 
+import com.andexert.library.RippleView;
 import com.skypayjm.app.minesweeper.R;
 import com.skypayjm.app.minesweeper.util.Communicator;
 
-import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -46,18 +47,34 @@ public class MainFragment extends Fragment {
         helpBtn.startAnimation(animation);
     }
 
-    @Click
-    void newBtn() {
-        communicator.swapNewGameFragment();
-    }
+    @ViewById
+    RippleView rippleNewGame, rippleOptions, rippleHelp;
 
-    @Click
-    void helpBtn() {
-        communicator.goToHelp();
-    }
+    @AfterViews
+    void init(){
+        rippleNewGame.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
 
-    @Click
-    void optionsBtn() {
-        communicator.goToOptions();
+            @Override
+            public void onComplete(RippleView rippleView) {
+                communicator.swapNewGameFragment();
+            }
+
+        });
+        rippleOptions.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+
+            @Override
+            public void onComplete(RippleView rippleView) {
+                communicator.goToOptions();
+            }
+
+        });
+        rippleHelp.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+
+            @Override
+            public void onComplete(RippleView rippleView) {
+                communicator.goToHelp();
+            }
+
+        });
     }
 }

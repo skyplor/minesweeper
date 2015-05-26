@@ -298,56 +298,6 @@ public class MainActivity extends Activity {
                 // particular instance of tile only
                 final int currentRow = row;
                 final int currentColumn = column;
-                // add Touch Listener so validate button will change as well
-//                tiles[row][column].setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
-//
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                            validate.setBackgroundResource(R.drawable.ic_smiley_down);
-//                        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//                            validate.setBackgroundResource(R.drawable.ic_smiley);
-//                        }
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public void onClick() {
-//
-//                        if (!isGameStarted) {
-//                            isGameStarted = true;
-//                            validate.setEnabled(true);
-//                        }
-//
-//                        // set mines on first click
-//                        if (!areMinesSet) {
-//                            areMinesSet = true;
-//                            tiles = util.randomizeBombs(currentRow, currentColumn, numOfBombs, tiles);
-//                            tiles = util.setTilesAdj(tiles);
-//                        }
-//
-//                        if (isFlagMode) {
-////                            // We will do this temp reveal only when the number wasn't revealed previously
-////                            if (!tiles[currentRow][currentColumn].isRevealed()) {
-////                                // We will reveal the particular tile for 1s before turning it back
-////                                util.tempReveal(tiles[currentRow][currentColumn]);
-////                            }
-//                            if (!tiles[currentRow][currentColumn].isRevealed()) {
-//                                setFlags(tiles[currentRow][currentColumn], numOfBombs);
-//                            }
-//                        } else {
-//                            // check if this tile is a bomb. If it is, reveal() will return true and we finishes this game
-//                            if (util.reveal(tiles[currentRow][currentColumn]))
-//                                // Oops, game over
-//                                finishGame();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onLongClick() {
-//                        setFlags(tiles[currentRow][currentColumn], numOfBombs);
-//                    }
-//                });
 
                 // add Click Listener
                 // this is treated as Left Mouse click
@@ -368,11 +318,7 @@ public class MainActivity extends Activity {
                         }
 
                         if (isFlagMode) {
-//                            // We will do this temp reveal only when the number wasn't revealed previously
-//                            if (!tiles[currentRow][currentColumn].isRevealed()) {
-//                                // We will reveal the particular tile for 1s before turning it back
-//                                util.tempReveal(tiles[currentRow][currentColumn]);
-//                            }
+                            // We will do this temp reveal only when the number wasn't revealed previously
                             if (!tiles[currentRow][currentColumn].isRevealed()) {
                                 setFlags(tiles[currentRow][currentColumn], numOfBombs);
                             }
@@ -396,7 +342,6 @@ public class MainActivity extends Activity {
                 });
             }
         }
-
     }
 
     private boolean setFlags(Tile tile, int numOfBombs) {
