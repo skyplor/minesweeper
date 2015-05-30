@@ -7,12 +7,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.skypayjm.app.minesweeper.R;
@@ -36,14 +34,14 @@ import org.androidannotations.annotations.ViewById;
 public class MainActivity extends Activity {
 
     public Tile[][] tiles;
-    private int tileDimension; // width of each tile
-    private int tilePadding = 2; // padding between tiles
+    //    private int tileDimension; // width of each tile
+//    private int tilePadding = 2; // padding between tiles
     private int rows;
     private int columns;
     private int numOfBombs;
     private boolean areMinesSet;
     private boolean isGameStarted = false;
-    private boolean isCheatMode;
+    //    private boolean isCheatMode;
     private Util util;
     private Handler timerHandler;
     private int secondsPassed = 0;
@@ -58,7 +56,7 @@ public class MainActivity extends Activity {
     TextView timerTextView, numBombsTextView;
 
     @ViewById
-    TableLayout MinesweepGridTable;
+    GridLayout MinesweepGridTable;
 
     @ViewById
     Button flagBtn;
@@ -81,9 +79,9 @@ public class MainActivity extends Activity {
 
     @Click(R.id.flagBtn)
     void flagMode() {
-        int width = flagBtn.getWidth();
-        int height = flagBtn.getHeight();
-        Log.d("MainActivity", "Button height and width: " + height + ", " + width);
+//        int width = flagBtn.getWidth();
+//        int height = flagBtn.getHeight();
+//        Log.d("MainActivity", "Button height and width: " + height + ", " + width);
         isFlagMode = !isFlagMode;
         if (isFlagMode) {
             flagBtn.setBackgroundResource(R.drawable.ic_flag_mode_down);
@@ -161,7 +159,7 @@ public class MainActivity extends Activity {
     private void resetGame() {
         validate.setEnabled(false);
         isGameStarted = false;
-        isCheatMode = false;
+//        isCheatMode = false;
 //        cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
 //        cheatGame.setTypeface(null, Typeface.NORMAL);
 //        cheatGame.setBackgroundResource(R.drawable.ic_lock);
@@ -170,8 +168,8 @@ public class MainActivity extends Activity {
         numOfFlags = 0;
         setNumberOfBombs();
         util = new Util(rows, columns);
-        tileDimension = util.getDeviceWidth(this) / 10;
-        Log.d("MainActivity", "tileDimension: " + tileDimension);
+//        tileDimension = util.getDeviceWidth(this) / 10;
+//        Log.d("MainActivity", "tileDimension: " + tileDimension);
         secondsPassed = 0;
         startTimer();
         startNewGame(rows, columns, numOfBombs);
@@ -348,7 +346,7 @@ public class MainActivity extends Activity {
         boolean flag = tile.isFlag();
         if (flag) {
             numOfFlags--;
-            tile.setBackgroundResource(R.drawable.sprite_up);
+            tile.setBackgroundResource(R.drawable.ic_tile_up);
             int curBombs = numOfBombs - numOfFlags;
             if (curBombs < 10) numBombsTextView.setText("00" + curBombs);
             else if (curBombs < 100) numBombsTextView.setText("0" + curBombs);
@@ -358,7 +356,7 @@ public class MainActivity extends Activity {
             int curBombs = numOfBombs - numOfFlags;
             if (curBombs > 0) {
                 numOfFlags++;
-                tile.setBackgroundResource(R.drawable.sprite_flag);
+                tile.setBackgroundResource(R.drawable.ic_tile_flag);
                 curBombs = numOfBombs - numOfFlags;
                 if (curBombs < 10) numBombsTextView.setText("00" + curBombs);
                 else if (curBombs < 100)
@@ -400,16 +398,34 @@ public class MainActivity extends Activity {
 
     // This method will generate out the actual minegrid and display it out for the player to start playing
     public void showMineGrid() {
-        for (int row = 0; row < rows; row++) {
-            TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableRow.LayoutParams((tileDimension + 2 * tilePadding) * columns, tileDimension + 2 * tilePadding));
-            for (int column = 0; column < columns; column++) {
-                tiles[row][column].setLayoutParams(new TableRow.LayoutParams(tileDimension + 2 * tilePadding, tileDimension + 2 * tilePadding));
-                tiles[row][column].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
-                tableRow.addView(tiles[row][column]);
+        MinesweepGridTable.setColumnCount(columns);
+        MinesweepGridTable.setRowCount(rows);
+        int buttonCount = rows * columns;
+        int buttonsInRow = 0;
+        int columnIndex = 0, rowIndex = 0;
+        for (int i = 0; i < buttonCount; i++) {
+            if (buttonsInRow == columns) {
+                rowIndex++;
+                buttonsInRow = 0;
+                columnIndex = 0;
             }
-            MinesweepGridTable.addView(tableRow, new TableLayout.LayoutParams((tileDimension + 2 * tilePadding) * columns, tileDimension + 2 * tilePadding));
+            GridLayout.Spec row = GridLayout.spec(rowIndex, 1);
+            GridLayout.Spec colspan = GridLayout.spec(columnIndex, 1);
+            GridLayout.LayoutParams gridLayoutParam = new GridLayout.LayoutParams(row, colspan);
+            MinesweepGridTable.addView(tiles[rowIndex][columnIndex], gridLayoutParam);
+            buttonsInRow++;
+            columnIndex++;
         }
+//        for (int row = 0; row < rows; row++) {
+//            TableRow tableRow = new TableRow(this);
+//            tableRow.setLayoutParams(new TableRow.LayoutParams((tileDimension + 2 * tilePadding) * columns, tileDimension + 2 * tilePadding));
+//            for (int column = 0; column < columns; column++) {
+//                tiles[row][column].setLayoutParams(new TableRow.LayoutParams(tileDimension + 2 * tilePadding, tileDimension + 2 * tilePadding));
+//                tiles[row][column].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
+//                tableRow.addView(tiles[row][column]);
+//            }
+//        MinesweepGridTable.addView(tableRow, new TableLayout.LayoutParams((tileDimension + 2 * tilePadding) * columns, tileDimension + 2 * tilePadding));
+//    }
     }
 
 }

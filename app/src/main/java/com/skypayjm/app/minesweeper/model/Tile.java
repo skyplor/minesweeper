@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Sky on 5/12/2015.
  */
 @EView
-public class Tile extends Button{
+public class Tile extends Button {
     private boolean isRevealed;
     private boolean isBomb;
     private boolean isFlag;
@@ -36,7 +36,12 @@ public class Tile extends Button{
         isFlag = false;
         isRevealed = false;
         adjTiles = new ArrayList<Tile>();
-        this.setBackgroundResource(R.drawable.sprite_up);
+        this.setMinimumWidth(0);
+        this.setMinimumHeight(0);
+        this.setMinWidth(0);
+        this.setMinHeight(0);
+        this.setPadding(5,5,5,5);
+        this.setBackgroundResource(R.drawable.ic_tile_up);
     }
 
     public int getBombCount() {

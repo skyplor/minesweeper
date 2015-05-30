@@ -162,32 +162,32 @@ public class Util {
         handler.postDelayed(new Runnable() {
             public void run() {
                 // Actions to do after 1 seconds
-                curBtn.setBackgroundResource(R.drawable.sprite_up);
+                curBtn.setBackgroundResource(R.drawable.ic_tile_up);
             }
         }, 1000);
     }
 
     private int getBackgroundResource(boolean bomb, int bombCount) {
-        if (bomb) return R.drawable.sprite_bomb;
+        if (bomb) return R.drawable.ic_tile_bomb;
         else switch (bombCount) {
             case 1:
-                return R.drawable.sprite_1;
+                return R.drawable.ic_tile_1;
             case 2:
-                return R.drawable.sprite_2;
+                return R.drawable.ic_tile_2;
             case 3:
-                return R.drawable.sprite_3;
+                return R.drawable.ic_tile_3;
             case 4:
-                return R.drawable.sprite_4;
+                return R.drawable.ic_tile_4;
             case 5:
-                return R.drawable.sprite_5;
+                return R.drawable.ic_tile_5;
             case 6:
-                return R.drawable.sprite_6;
+                return R.drawable.ic_tile_6;
             case 7:
-                return R.drawable.sprite_7;
+                return R.drawable.ic_tile_7;
             case 8:
-                return R.drawable.sprite_8;
+                return R.drawable.ic_tile_8;
             default:
-                return R.drawable.sprite_blank;
+                return R.drawable.ic_tile_blank;
         }
     }
 
