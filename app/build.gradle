@@ -4,11 +4,13 @@ buildscript {
     }
     dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'com.jakewharton.hugo'
 def AAVersion = '3.3.1'
 
 dependencies {
@@ -17,6 +19,7 @@ dependencies {
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.github.traex.rippleeffect:library:1.3'
+    compile 'com.kogitune:pre-lollipop-activity-transition:1.0.0'
 }
 
 android {
@@ -27,8 +30,8 @@ android {
         applicationId "com.skypayjm.app.minesweeper"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.3"
     }
     buildTypes {
         release {

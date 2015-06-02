@@ -10,8 +10,8 @@
         android:id="@+id/rippleNewGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:rv_color="@color/Black"
-        app:rv_alpha="42">
+        app:rv_alpha="42"
+        app:rv_color="@color/Black">
 
         <Button
             android:id="@+id/newBtn"
@@ -19,16 +19,20 @@
             android:layout_height="wrap_content"
             android:background="@color/White"
             android:text="@string/new_game"
-            android:textColor="@color/SeaGreen" />
+            android:textColor="@color/SeaGreen"
+            android:transitionName="@string/new_game_transition" />
     </com.andexert.library.RippleView>
 
-    <View android:layout_width="match_parent" android:layout_height="12dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
     <com.andexert.library.RippleView
         android:id="@+id/rippleOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:rv_color="@color/Black"
-        app:rv_alpha="42">
+        app:rv_alpha="42"
+        app:rv_color="@color/Black">
 
         <Button
             android:id="@+id/optionsBtn"
@@ -39,13 +43,16 @@
             android:textColor="@color/SeaGreen" />
     </com.andexert.library.RippleView>
 
-    <View android:layout_width="match_parent" android:layout_height="12dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
     <com.andexert.library.RippleView
         android:id="@+id/rippleHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:rv_color="@color/Black"
-        app:rv_alpha="42">
+        app:rv_alpha="42"
+        app:rv_color="@color/Black">
 
         <Button
             android:id="@+id/helpBtn"

@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.kogitune.activity_transition.fragment.FragmentTransitionLauncher;
 import com.skypayjm.app.minesweeper.R;
 import com.skypayjm.app.minesweeper.util.Communicator;
 
@@ -19,11 +21,15 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
+import hugo.weaving.DebugLog;
+
 @Fullscreen
 @EActivity(R.layout.activity_minesweeper_game)
 public class MinesweeperGame extends Activity implements Communicator {
     @ViewById
     TextView title;
+    @ViewById
+    ViewGroup main_layout;
 
     String mainFragTag = "MainFragment";
     String diffFragTag = "DifficultyFragment";
@@ -82,21 +88,27 @@ public class MinesweeperGame extends Activity implements Communicator {
     // Here, we do another animation and swap out the main fragment for the difficulty level fragment
     // when the New Game button is tapped.
     @Override
-    public void swapNewGameFragment() {
+    public void swapNewGameFragment(View view) {
         difficultyLevelFragment = new DifficultyLevelFragment_();
+        FragmentTransitionLauncher
+                .with(view.getContext())
+                .from(view.findViewById(R.id.newBtn)).prepare(difficultyLevelFragment);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(
-                R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                R.animator.card_flip_left_in, R.animator.card_flip_left_out);
-
+//        fragmentTransaction.setCustomAnimations(
+//                R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+//                R.animator.card_flip_left_in, R.animator.card_flip_left_out);
         fragmentTransaction.replace(R.id.main_layout, difficultyLevelFragment, diffFragTag);
         // This portion is crucial in that we push this transaction into the backstack so users can
         // go back to seeing the main fragment when they press the back button
         fragmentTransaction.addToBackStack(mainFragTag);
+//        View sharedView = rippleBeginner;
+//        String transitionName = getString(R.string.new_game_transition);
+//        fragmentTransaction.addSharedElement()
         fragmentTransaction.commit();
     }
 
     // Here, we pass some values over to the next activity when the player select the difficulty level
+    @DebugLog
     @Override
     public void goToNewGame(int rows, int columns, int numOfBombs) {
         Intent intent = new Intent(MinesweeperGame.this, MainActivity_.class);

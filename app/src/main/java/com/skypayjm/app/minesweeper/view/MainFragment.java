@@ -51,12 +51,20 @@ public class MainFragment extends Fragment {
     RippleView rippleNewGame, rippleOptions, rippleHelp;
 
     @AfterViews
-    void init(){
+    void init() {
         rippleNewGame.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
 
             @Override
             public void onComplete(RippleView rippleView) {
-                communicator.swapNewGameFragment();
+//                Fade fade = new Fade();
+//                fade.setDuration(2000);
+//                ViewGroup sceneRoot = (ViewGroup) getView();
+//                TransitionManager.beginDelayedTransition(sceneRoot, fade);
+//
+//                setSharedElementReturnTransition(TransitionInflater.from(getActivity()).inflateTransition(R.anim.shared_element_transition_new_game));
+//              setExitTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.explode));
+
+                communicator.swapNewGameFragment(rippleNewGame);
             }
 
         });

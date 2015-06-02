@@ -40,7 +40,7 @@ public class Tile extends Button {
         this.setMinimumHeight(0);
         this.setMinWidth(0);
         this.setMinHeight(0);
-        this.setPadding(5,5,5,5);
+        this.setPadding(5, 5, 5, 5);
         this.setBackgroundResource(R.drawable.ic_tile_up);
     }
 
