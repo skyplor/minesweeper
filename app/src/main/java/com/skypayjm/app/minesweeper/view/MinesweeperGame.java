@@ -83,6 +83,8 @@ public class MinesweeperGame extends Activity implements Communicator {
             }
         });
         title.startAnimation(animation1);
+
+
     }
 
     // Here, we do another animation and swap out the main fragment for the difficulty level fragment
@@ -94,9 +96,6 @@ public class MinesweeperGame extends Activity implements Communicator {
                 .with(view.getContext())
                 .from(view.findViewById(R.id.newBtn)).prepare(difficultyLevelFragment);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.setCustomAnimations(
-//                R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-//                R.animator.card_flip_left_in, R.animator.card_flip_left_out);
         fragmentTransaction.replace(R.id.main_layout, difficultyLevelFragment, diffFragTag);
         // This portion is crucial in that we push this transaction into the backstack so users can
         // go back to seeing the main fragment when they press the back button
@@ -130,4 +129,9 @@ public class MinesweeperGame extends Activity implements Communicator {
         startActivity(optionsIntent);
     }
 
+    @Override
+    public void onBackPressed(){
+//        if()
+        super.onBackPressed();
+    }
 }

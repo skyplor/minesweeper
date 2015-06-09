@@ -73,13 +73,15 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/newExpandedBtn"
-        android:layout_width="200dp"
+        android:id="@+id/newMiddleBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/difficultyLinearLayout"
-        android:layout_alignTop="@id/difficultyLinearLayout"
+        android:layout_alignLeft="@id/difficultyLinearLayout"
+        android:layout_alignRight="@id/difficultyLinearLayout"
+        android:layout_centerInParent="true"
         android:background="@color/White"
         android:text="@string/new_game"
         android:textColor="@color/SeaGreen"
         android:transitionName="@string/new_game_transition" />
+
 </RelativeLayout>
