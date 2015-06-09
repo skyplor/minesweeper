@@ -1,85 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="com.skypayjm.app.minesweeper.view.DifficultyLevelFragment_">
 
-    <LinearLayout
-        android:id="@+id/difficultyLinearLayout"
+    <com.andexert.library.RippleView
+        android:id="@+id/rippleBeginner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:rv_color="@color/Black"
+        app:rv_alpha="42"
+        app:rv_rippleDuration="200">
 
-        <com.andexert.library.RippleView
-            android:id="@+id/rippleBeginner"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/beginnerBtn"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            app:rv_alpha="42"
-            app:rv_color="@color/Black"
-            app:rv_rippleDuration="200">
+            android:background="@color/White"
+            android:text="@string/beginner"
+            android:textColor="@color/SeaGreen" />
 
-            <Button
-                android:id="@+id/beginnerBtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@color/White"
-                android:text="@string/beginner"
-                android:textColor="@color/SeaGreen" />
+    </com.andexert.library.RippleView>
 
-        </com.andexert.library.RippleView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
-
-        <com.andexert.library.RippleView
-            android:id="@+id/rippleIntermediate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="42"
-            app:rv_color="@color/Black"
-            app:rv_rippleDuration="200">
-
-            <Button
-                android:id="@+id/intermediateBtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@color/White"
-                android:text="@string/intermediate"
-                android:textColor="@color/SeaGreen" />
-        </com.andexert.library.RippleView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
-
-        <com.andexert.library.RippleView
-            android:id="@+id/rippleExpert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="42"
-            app:rv_color="@color/Black"
-            app:rv_rippleDuration="200">
-
-            <Button
-                android:id="@+id/expertBtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@color/White"
-                android:text="@string/expert"
-                android:textColor="@color/SeaGreen" />
-        </com.andexert.library.RippleView>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/newExpandedBtn"
-        android:layout_width="200dp"
+    <com.andexert.library.RippleView
+        android:id="@+id/rippleIntermediate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/difficultyLinearLayout"
-        android:layout_alignTop="@id/difficultyLinearLayout"
-        android:background="@color/White"
-        android:text="@string/new_game"
-        android:textColor="@color/SeaGreen"
-        android:transitionName="@string/new_game_transition" />
-</RelativeLayout>
+        app:rv_color="@color/Black"
+        app:rv_alpha="42"
+        app:rv_rippleDuration="200">
+
+        <Button
+            android:id="@+id/intermediateBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:text="@string/intermediate"
+            android:textColor="@color/SeaGreen" />
+    </com.andexert.library.RippleView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
+    <com.andexert.library.RippleView
+        android:id="@+id/rippleExpert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rv_color="@color/Black"
+        app:rv_alpha="42"
+        app:rv_rippleDuration="200">
+
+        <Button
+            android:id="@+id/expertBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:text="@string/expert"
+            android:textColor="@color/SeaGreen" />
+    </com.andexert.library.RippleView>
+</LinearLayout>
