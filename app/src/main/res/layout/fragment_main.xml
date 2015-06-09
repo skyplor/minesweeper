@@ -20,7 +20,7 @@
             android:background="@color/White"
             android:text="@string/new_game"
             android:textColor="@color/SeaGreen"
-            android:transitionName="@string/new_game_transition" />
+            android:transitionName="@string/new_game_transition"/>
     </com.andexert.library.RippleView>
 
     <View

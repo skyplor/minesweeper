@@ -2,18 +2,15 @@ package com.skypayjm.app.minesweeper.view;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.andexert.library.RippleView;
-import com.kogitune.activity_transition.fragment.ExitFragmentTransition;
-import com.kogitune.activity_transition.fragment.FragmentTransition;
 import com.skypayjm.app.minesweeper.R;
 import com.skypayjm.app.minesweeper.util.Communicator;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -38,13 +35,13 @@ public class DifficultyLevelFragment extends Fragment {
     @ViewById
     RippleView rippleBeginner, rippleIntermediate, rippleExpert;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_difficulty_level, container, false);
-        View newExpandedBtn  = v.findViewById(R.id.newExpandedBtn);
-        final ExitFragmentTransition exitFragmentTransition = FragmentTransition.with(this).duration(500).to(newExpandedBtn).start(savedInstanceState);
-        exitFragmentTransition.startExitListening();
-        return v;
-    }
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View v = inflater.inflate(R.layout.fragment_difficulty_level, container, false);
+//        View newExpandedBtn  = v.findViewById(R.id.newExpandedBtn);
+//        final ExitFragmentTransition exitFragmentTransition = FragmentTransition.with(this).duration(500).to(newExpandedBtn).start(savedInstanceState);
+//        exitFragmentTransition.startExitListening();
+//        return v;
+//    }
 
     @AfterViews
     void init() {
@@ -79,5 +76,13 @@ public class DifficultyLevelFragment extends Fragment {
             }
 
         });
+    }
+
+    @ViewById
+    Button newExpandedBtn;
+
+    @Click
+    void newExpandedBtn() {
+        newExpandedBtn.setVisibility(View.GONE);
     }
 }

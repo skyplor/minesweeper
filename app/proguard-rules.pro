@@ -77,3 +77,7 @@
 -dontwarn org.springframework.http.HttpAuthentication
 -dontwarn org.springframework.web.client.*
 -dontwarn org.androidannotations.api.rest.**
+
+#Material Transitions
+-keep class android.transitions.everywhere.** { *; }
+-keep class android.transitions.everywhere.**.** { *; }

@@ -282,6 +282,7 @@ public class MainActivity extends Activity {
         }
     }
 
+    @DebugLog
     private boolean setFlags(Tile tile, int numOfBombs) {
         boolean flag = tile.isFlag();
         if (flag) {
