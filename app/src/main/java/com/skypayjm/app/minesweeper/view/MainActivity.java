@@ -34,14 +34,11 @@ import org.androidannotations.annotations.ViewById;
 public class MainActivity extends Activity {
 
     public Tile[][] tiles;
-    //    private int tileDimension; // width of each tile
-//    private int tilePadding = 2; // padding between tiles
     private int rows;
     private int columns;
     private int numOfBombs;
     private boolean areMinesSet;
     private boolean isGameStarted = false;
-    //    private boolean isCheatMode;
     private Util util;
     private Handler timerHandler;
     private int secondsPassed = 0;
@@ -60,28 +57,9 @@ public class MainActivity extends Activity {
 
     @ViewById
     Button flagBtn;
-//    @OptionsMenuItem
-//    MenuItem menu_flag;
-//    @OptionsMenuItem
-//    MenuItem menu_cheat;
-//
-//    @OptionsItem(R.id.menu_cheat)
-//    void cheatMode() {
-//        isCheatMode = !isCheatMode;
-//        menu_cheat.setChecked(isCheatMode);
-//    }
-//
-//    @OptionsItem(R.id.menu_flag)
-//    void flagMode() {
-//        isFlagMode = !isFlagMode;
-//        menu_flag.setChecked(isFlagMode);
-//    }
 
     @Click(R.id.flagBtn)
     void flagMode() {
-//        int width = flagBtn.getWidth();
-//        int height = flagBtn.getHeight();
-//        Log.d("MainActivity", "Button height and width: " + height + ", " + width);
         isFlagMode = !isFlagMode;
         if (isFlagMode) {
             flagBtn.setBackgroundResource(R.drawable.ic_flag_mode_down);
@@ -98,24 +76,6 @@ public class MainActivity extends Activity {
         columns = intent.getIntExtra("columns", 0);
         numOfBombs = intent.getIntExtra("numOfBombs", 0);
     }
-
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        menu_cheat.setChecked(isCheatMode);
-//        menu_flag.setChecked(isFlagMode);
-//        return true;
-//    }
-//    @Click(R.id.newGame)
-//    void handleNewGameClick() {
-//        if (isGameStarted) {
-//            // Have a confirmation dialog
-//            create_showDialog("Are you sure you want to restart?", "Yes", "No", RESTART);
-//        } else {
-//            //clear the board first
-//            MinesweepGridTable.removeAllViews();
-//            resetGame();
-//        }
-//    }
 
     /**
      * @param msg      The message to be displayed
@@ -159,17 +119,11 @@ public class MainActivity extends Activity {
     private void resetGame() {
         validate.setEnabled(false);
         isGameStarted = false;
-//        isCheatMode = false;
-//        cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
-//        cheatGame.setTypeface(null, Typeface.NORMAL);
-//        cheatGame.setBackgroundResource(R.drawable.ic_lock);
         areMinesSet = false;
         isFlagMode = false;
         numOfFlags = 0;
         setNumberOfBombs();
         util = new Util(rows, columns);
-//        tileDimension = util.getDeviceWidth(this) / 10;
-//        Log.d("MainActivity", "tileDimension: " + tileDimension);
         secondsPassed = 0;
         startTimer();
         startNewGame(rows, columns, numOfBombs);
@@ -185,24 +139,6 @@ public class MainActivity extends Activity {
             finishGame();
         }
     }
-
-//    @Click(R.id.cheatGame)
-//    void handleCheatClick() {
-    //on depress, cheat button text will change to red.
-//        cheatModeSet = !cheatModeSet;
-//        if (cheatModeSet) {
-//            Toast.makeText(this, "Cheat Mode On", Toast.LENGTH_SHORT).show();
-////            cheatGame.setTextColor(Color.RED);
-////            cheatGame.setTypeface(null, Typeface.BOLD);
-//            cheatGame.setBackgroundResource(R.drawable.ic_unlock);
-//        } else {
-//            Toast.makeText(this, "Cheat Mode Off", Toast.LENGTH_SHORT).show();
-////            cheatGame.setTextColor(getResources().getColor(R.color.Indigo));
-////            cheatGame.setTypeface(null, Typeface.NORMAL);
-//            cheatGame.setBackgroundResource(R.drawable.ic_lock);
-//        }
-//
-//    }
 
     @AfterViews
     void init() {
@@ -223,7 +159,6 @@ public class MainActivity extends Activity {
             numBombsTextView.setText(numOfBombs);
     }
 
-    //    @Background
     void startTimer() {
         if (secondsPassed == 0) {
             timerHandler.removeCallbacks(updateTimeElasped);
@@ -289,7 +224,7 @@ public class MainActivity extends Activity {
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
                 tiles[row][column] = new Tile(this);
-                tiles[row][column].setDefaults();
+                tiles[row][column].setDefaults(row, column);
 
                 // pass current row and column number as final int's to event listeners
                 // this way we can ensure that each event listener is associated to
@@ -318,7 +253,7 @@ public class MainActivity extends Activity {
                         if (isFlagMode) {
                             // We will do this temp reveal only when the number wasn't revealed previously
                             if (!tiles[currentRow][currentColumn].isRevealed()) {
-                                setFlags(tiles[currentRow][currentColumn], numOfBombs);
+                                setFlags(tiles[currentRow][currentColumn], numOfBombs, currentRow, currentColumn);
                             }
                         } else {
                             // check if this tile is a bomb. If it is, reveal() will return true and we finishes this game
@@ -333,7 +268,7 @@ public class MainActivity extends Activity {
                     public boolean onLongClick(View v) {
                         if (v instanceof Tile) {
                             Tile tile = (Tile) v;
-                            if (setFlags(tile, numOfBombs)) return true;
+                            if (setFlags(tile, numOfBombs, currentRow, currentColumn)) return true;
                         }
                         return true;
                     }
@@ -342,11 +277,14 @@ public class MainActivity extends Activity {
         }
     }
 
-    private boolean setFlags(Tile tile, int numOfBombs) {
+    private boolean setFlags(Tile tile, int numOfBombs, int row, int col) {
         boolean flag = tile.isFlag();
         if (flag) {
             numOfFlags--;
-            tile.setBackgroundResource(R.drawable.ic_tile_up);
+            if ((row % 2 == 0 && col % 2 == 0) || (row % 2 == 1 && col % 2 == 1))
+                tile.setBackgroundResource(R.drawable.ic_tile_up);
+            else
+                tile.setBackgroundResource(R.drawable.ic_tile_up_1);
             int curBombs = numOfBombs - numOfFlags;
             if (curBombs < 10) numBombsTextView.setText("00" + curBombs);
             else if (curBombs < 100) numBombsTextView.setText("0" + curBombs);
@@ -356,7 +294,10 @@ public class MainActivity extends Activity {
             int curBombs = numOfBombs - numOfFlags;
             if (curBombs > 0) {
                 numOfFlags++;
-                tile.setBackgroundResource(R.drawable.ic_tile_flag);
+                if ((row % 2 == 0 && col % 2 == 0) || (row % 2 == 1 && col % 2 == 1))
+                    tile.setBackgroundResource(R.drawable.ic_tile_flag);
+                else
+                    tile.setBackgroundResource(R.drawable.ic_tile_flag_1);
                 curBombs = numOfBombs - numOfFlags;
                 if (curBombs < 10) numBombsTextView.setText("00" + curBombs);
                 else if (curBombs < 100)
@@ -400,6 +341,7 @@ public class MainActivity extends Activity {
     public void showMineGrid() {
         MinesweepGridTable.setColumnCount(columns);
         MinesweepGridTable.setRowCount(rows);
+        MinesweepGridTable.setBackgroundResource(R.color.translucent_black);
         int buttonCount = rows * columns;
         int buttonsInRow = 0;
         int columnIndex = 0, rowIndex = 0;
@@ -416,16 +358,6 @@ public class MainActivity extends Activity {
             buttonsInRow++;
             columnIndex++;
         }
-//        for (int row = 0; row < rows; row++) {
-//            TableRow tableRow = new TableRow(this);
-//            tableRow.setLayoutParams(new TableRow.LayoutParams((tileDimension + 2 * tilePadding) * columns, tileDimension + 2 * tilePadding));
-//            for (int column = 0; column < columns; column++) {
-//                tiles[row][column].setLayoutParams(new TableRow.LayoutParams(tileDimension + 2 * tilePadding, tileDimension + 2 * tilePadding));
-//                tiles[row][column].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
-//                tableRow.addView(tiles[row][column]);
-//            }
-//        MinesweepGridTable.addView(tableRow, new TableLayout.LayoutParams((tileDimension + 2 * tilePadding) * columns, tileDimension + 2 * tilePadding));
-//    }
     }
 
 }

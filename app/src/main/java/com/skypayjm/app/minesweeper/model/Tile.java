@@ -31,7 +31,7 @@ public class Tile extends Button {
         super(context, attrs);
     }
 
-    public void setDefaults() {
+    public void setDefaults(int row, int col) {
         isBomb = false;
         isFlag = false;
         isRevealed = false;
@@ -40,8 +40,12 @@ public class Tile extends Button {
         this.setMinimumHeight(0);
         this.setMinWidth(0);
         this.setMinHeight(0);
-        this.setPadding(5,5,5,5);
-        this.setBackgroundResource(R.drawable.ic_tile_up);
+        this.setPadding(5, 5, 5, 5);
+
+        if ((row % 2 == 0 && col % 2 == 0) || (row % 2 == 1 && col % 2 == 1))
+            this.setBackgroundResource(R.drawable.ic_tile_up);
+        else
+            this.setBackgroundResource(R.drawable.ic_tile_up_1);
     }
 
     public int getBombCount() {
